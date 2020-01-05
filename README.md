@@ -1,37 +1,3 @@
-# Explainer
-<!----- Conversion time: 7.122 seconds.
-
-
-Using this Markdown file:
-
-1. Cut and paste this output into your source file.
-2. See the notes and action items below regarding this conversion run.
-3. Check the rendered output (headings, lists, code blocks, tables) for proper
-   formatting and use a linkchecker before you publish this page.
-
-Conversion notes:
-
-* Docs to Markdown version 1.0β17
-* Sat Jan 04 2020 17:53:41 GMT-0800 (PST)
-* Source doc: https://docs.google.com/open?id=1F94b0-AraEZRA6bCxgWgEffkTzRRs113mi7uYmgcjxE
-* This document has images: check for >>>>>  gd2md-html alert:  inline image link in generated source and store images to your server.
------>
-
-
-<p style="color: red; font-weight: bold">>>>>>  gd2md-html alert:  ERRORs: 0; WARNINGs: 0; ALERTS: 7.</p>
-<ul style="color: red; font-weight: bold"><li>See top comment block for details on ERRORs and WARNINGs. <li>In the converted Markdown or HTML, search for inline alerts that start with >>>>>  gd2md-html alert:  for specific instances that need correction.</ul>
-
-<p style="color: red; font-weight: bold">Links to alert messages:</p><a href="#gdcalert1">alert1</a>
-<a href="#gdcalert2">alert2</a>
-<a href="#gdcalert3">alert3</a>
-<a href="#gdcalert4">alert4</a>
-<a href="#gdcalert5">alert5</a>
-<a href="#gdcalert6">alert6</a>
-<a href="#gdcalert7">alert7</a>
-
-<p style="color: red; font-weight: bold">>>>>> PLEASE check and correct alert issues and delete this message and the inline alerts.<hr></p>
-
-
 <h1>The MapML proposal - EXPLAINER.md</h1>
 
 
@@ -47,14 +13,7 @@ The [Maps for HTML Community Group](https://www.w3.org/community/maps4html/) is 
 
 [Issue tracker for this explainer](https://github.com/Maps4HTML/MapML-Proposal/issues)
 
-<h2>Table of Contents</h2>
 
-
-
-[TOC]
-
-
-<h2></h2>
 
 
 <h2 id="introduction">Introduction</h2>
@@ -72,9 +31,9 @@ Web maps today are created using a wide range of technology stacks on both the c
 <h3 id="so-what-is-the-problem-to-solve">So, What Is The Problem to Solve?</h3>
 
 
-**The** **problem to be solved, **therefore, **is to reduce the threshold complexity of creating accessible and usable Web maps, and to enable full use of Web platform standards** such as HTML, URL, SVG, CSS and JavaScript in map creation, styling, presentation and interaction. 
+The problem to be solved, therefore, is to **reduce the threshold complexity of creating accessible and usable Web maps, and to enable full use of Web platform standards** such as HTML, URL, SVG, CSS and JavaScript in map creation, styling, presentation and interaction. 
 
-**To solve the problem**, our approach is to identify the **Web map processing **that is currently performed by JavaScript libraries which **should instead be defined as elements and attributes supported by CSS**, while at the same time, we identify the Web map processing that **should** remain in the JavaScript domain as a standardized DOM API. By **building the core behaviour of maps and layers into HTML**, Web authors who want to **build simple maps** into their pages can **easily** do so, supported by core platform technologies, with the power of JavaScript available to enhance the core map and layer behaviour.
+**To solve the problem**, our approach is to identify the **Web map processing** that is currently performed by JavaScript libraries which **should instead be defined as elements and attributes supported by CSS**, while at the same time, we identify the Web map processing that **should** remain in the JavaScript domain as a standardized DOM API. By **building the core behaviour of maps and layers into HTML**, Web authors who want to **build simple maps** into their pages can **easily** do so, supported by core platform technologies, with the power of JavaScript available to enhance the core map and layer behaviour.
 
 By lowering the barriers for Web map authors in this way, we will improve the usability, and standardize the accessibility of Web maps.  Through making map creation a matter of applying appropriately crafted Web platform standards, we will create the conditions to multiply the choices of mapping services offered to authors and users of the Web. 
 
@@ -123,10 +82,7 @@ The **proposed** extension would create a standard **`<map>` widget** that conta
 
 
 
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/Explainer0.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/Explainer0.png "image_tooltip")
+![The map element](images/map-element.png "The map element")
 
 
 <h3 id="the-layer-element">The layer element</h3>
@@ -134,12 +90,7 @@ The **proposed** extension would create a standard **`<map>` widget** that conta
 
 A layer is a primitive abstraction that is shared by many if not most maps, both on and off the Web. Even in the case that a map doesn’t have more than a single layer, the map itself can be considered to be composed of that single layer. A key characteristic of map layers is that they share the same coordinate system as other layers in the map, allowing the rendering engine to lay out and render content over the same coordinate space.  This is in contrast to the normal rendering of HTML elements, which are laid out in document order down the page. There is precedent for the proposed rendering model for maps in HTML, however.  The “client side image map” of HTML, implemented by the `<img>`, `<map>` and `<area>` elements, has this rendering model; the `<area>`s “coords” attribute are expressed in units of the pixel-based coordinate system of the `<map>`-associated `<img>` element.  An author-friendly system for dynamic Web mapping, such as that intended by this proposal, would make it as simple as possible to automatically layer map content, ideally re-using and extending the markup for `<img>` `<map>` and `<area>` that has become familiar.  A more thorough discussion of how this proposal conforms or relates to the HTML Design Principles is beyond the scope of this explainer, but is available [here](https://www.w3.org/community/maps4html/2019/12/09/the-design-of-mapml/).
 
-
-
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/Explainer1.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/Explainer1.png "image_tooltip")
+<span id="bookmark1">![The layer element](images/layer-element.png "The layer element")</span>
 
 
 Layers are added to maps by adding `<layer>` elements as children of the `<map>` element. Every `<layer>` added to the map must share the same coordinate system declared by the `<map>` in its projection attribute. If the layer added does not share the same coordinate system as the `<map>`, it will not be displayed and the layer will be ‘disabled’ in the layer control of the map widget. The set of possible coordinate systems is small, and the values enumerated by the MapML specification.  If no projection attribute is specified, the default coordinate system is that of Web Mercator, signified by the “OSMTILE” value. 
@@ -185,7 +136,7 @@ The processing model is similar, and related to that of `<form action=”...”>
 
 The reason for specifying this as an extension of the <link> element is because there can be more than a single template processed within such an extent, retrieving image or document resources for each, and rendering the result in document order, for example, geometries and labels for a single “layer” may be rendered via different resource templates / links ([example](http://geogratis.gc.ca/mapml/en/osmtile/cbmt/)).
 
-<h4 id="the-input-element">[The input element](https://maps4html.github.io/MapML/spec/#the-input-element)</h4>
+[<h4 id="the-input-element">The input element</h4>](https://maps4html.github.io/MapML/spec/#the-input-element)
 
 
 There are four proposed types of input in MapML: location, zoom, width and height. Like inputs in HTML, each input has a name attribute which specifies the name of the variable to be set by the input.  This is the core mechanism whereby URLs processed by the browser are decoupled (or indirectly coupled, at least) from the services they are used to access; a server URL may be composed of names, the meanings of which are known to the service or domain, but which are meaningless to the browser. In this way, the client and service are directly coupled to the MapML specification, but decoupled from each other.
@@ -195,12 +146,12 @@ There are four proposed types of input in MapML: location, zoom, width and heigh
 
 Locations are specified in coordinates of one of the coordinate systems associated to the root “projection”, also known as a **Tiled Coordinate Reference System,** which is a term defined by MapML in order to unify concepts and vocabulary required for enabling maps in HTML. The location input has several attributes which authors specify to control the serialization of the location.  However, the coordinate systems of the Tiled Coordinate Reference Systems defined by MapML are widely understood even outside MapML; MapML mostly standardizes the terminology around those coordinate systems, especially the names,  into the specification for the purpose of using that terminology in the input attributes.  
 
-<h6 id="the-input-type-location-units-attribute">The input type=”location” **units**=”...” attribute</h6>
+<h6 id="the-input-type-location-units-attribute">The input type=”location” units=”...” attribute</h6>
 
 
 Dynamic Web maps are pannable, zoomable and queryable through user gestures.  As a map is manipulated, it may require new content to cover its extent, or to respond to a query. To get new content, location events are generated for the extent implicated in the event (or a part of the extent, such as a map tile). **Locations** associated with the events are referenced by location inputs, by virtue of the combination of input attributes.  The **units** attribute has a small set of possible values, which can be one of “tcrs”, “pcrs”, “gcrs”, “map”, “tilematrix” or “tile”.  Each of these values signifies the child coordinate system from the parent [tiled coordinate reference system](#tiled-coordinate-reference-systems) in which the event is considered to take place.  If the author specifies units=”tilematrix”, for example, the location input refers to the location of each required tile as it is required. 
 
-<h6 id="the-input-type-location-units-axis-attribute">The input type=”location” units=”...” **axis**=”...” attribute</h6>
+<h6 id="the-input-type-location-units-axis-attribute">The input type=”location” units=”...” axis=”...” attribute</h6>
 
 
 In the following example, the inputs with names ‘x’ and ‘y’ request the event location’s column and row coordinate axes, respectively. Note that while the location of the event has all three properties of a location in a tiled coordinate reference system, (i.e. zoom, horizontal axis value, and vertical axis value) the input is only able to refer to or serialize one property of the location.  Hence, the input carries the “axis” attribute, referring to the name of the horizontal axis (column, in the example below) and vertical axis (row, below) whose value is required.  The “zoom” property of a location event isn’t considered a coordinate axis, and zoom has an input type of its own. Nevertheless, a location event always has a zoom value.  [Issue 56](https://github.com/Maps4HTML/MapML/issues/56) 
@@ -218,22 +169,22 @@ In the following example, the inputs with names ‘x’ and ‘y’ request the 
 
 All of the child coordinate systems of the parent tiled coordinate reference system exist in the same space; they are equivalent ways of referring to locations in the extent.  As such, when requesting a location’s coordinates, we aren’t limited to the coordinate axes of the child coordinate system identified in the units attribute, we could request any valid child coordinate systems axis. For example, if we want to specify the latitude of the tile event in the above example, we could have specified the axis=”latitude”.  This returns the latitude of the center (by default) of the tile event. The set of legal axis names are: **x,y** (from the tcrs pixel-based coordinate system), **i,j** (from the map or tile pixel-based coordinate systems), **row,column** (from the tile-based tilematrix coordinate system), **easting,northing** (from the pcrs meter-based coordinate system), and **latitude,longitude** (from the decimal-degrees-based gcrs coordinate system)
 
-<h6 id="the-input-type-location-units-axis-position-attribute">The input type=”location” units=”...” axis=”...” **position**=”...” attribute</h6>
+<h6 id="the-input-type-location-units-axis-position-attribute">The input type=”location” units=”...” axis=”...” position=”...” attribute</h6>
 
 
 Location events can be relative to the rectangle of an extent or part of an extent.  The **position** attribute has a small set of possible values, which identify the location that is requested.  These are: “**center**” (the default), **top-center**, **bottom-center**, **top-left,** **top-right**, **bottom-left**, and **bottom-right**.  These named positions identify locations relative to a defined rectangle, such as the map extent, or the extent of a tile.  This allows the author to request locations that the user agent ‘understands’ as simply as possible.
 
-<h6 id="the-input-type-location-units-axis-position-rel-attribute">The input type=”location” units=”...” axis=”...” position=”...” **rel**=”...” attribute</h6>
+<h6 id="the-input-type-location-units-axis-position-rel-attribute">The input type=”location” units=”...” axis=”...” position=”...” rel=”...” attribute</h6>
 
 
 Location events generated by an extent can be located at a relative position of the extent, as identified by the position attribute.  The extent to which the event is related is by default the map extent.  By specifying the rel=”tile” value, the position refers to the position on the tile in which the event is located.  This facility was designed to support querying of WMTS tiles, which require the pixel coordinates of the pixel within the tile in order to query the tile store.  [Issue 57](https://github.com/Maps4HTML/MapML/issues/57)
 
-<h6 id="the-input-name-type-location-units-axis-min-max-attributes">The input name=”...” type=”location” units=”...” axis=”...” **min**=”...” **max**=”...” attributes</h6>
+<h6 id="the-input-name-type-location-units-axis-min-max-attributes">The input name=”...” type=”location” units=”...” axis=”...” min=”...” max=”...” attributes</h6>
 
 
 The location `<input min>` and `<input max>` attributes should be used together.  They are a way for the server to describe axis bounds that can be respected by the client.  When the client generates an event that results in a value for the input that is outside the established range (because the map is viewing a scene outside the range for this particular layer), no request will be made to URLs that require the variable to have a value.  In this way, the server can avoid needless traffic to itself by transmitting min/max on inputs for zoom and location axes.
 
-<h6 id="the-input-name-type-zoom-value-min-max-attributes">The input name=”...” type=”zoom” **value**=”...” **min**=”...” **max**=”...” attributes</h6>
+<h6 id="the-input-name-type-zoom-value-min-max-attributes">The input name=”...” type=”zoom” value=”...” min=”...” max=”...” attributes</h6>
 
 
 The zoom input min and max attributes should be used together.  They are a way for the server to describe the zoom limits that can be respected by the client, similar to the range established for axes limits by location inputs. The value attribute should be used to establish the zoom level at which axis bounds are value. 
@@ -268,7 +219,7 @@ The `<tile>` element can also be used to serve static MapML content, for example
 
 
 The `<feature>` element’s design mirrors what Web map developers actually do with vector information, which is commonly encoded in JSON as ‘GeoJSON’.  The feature element has a `<properties>` child element, which is intended for human-readable HTML markup, rendered in its own browsing context such as a popup or pullout, and a `<geometry>` child element for the map-displayable feature content.  The need for a new `<geometry>` element is driven by the need to style and embed links in content, described below.
-
+<span id="bookmark2"></span>
 
 ```
 <feature>
@@ -321,13 +272,7 @@ coordinates.f72.outer { stroke: blue; fill: #DAA520;}
 coordinates.f72.hole  { stroke: blue; fill: none;}
 ```
 
-
-
-
-<p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/Explainer2.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/Explainer2.png "image_tooltip")
+![Tiled vector data, tiles shown](images/vector-tiles-shown.png "image_tooltip")
 
 
 In the next screen capture, below, a CSS selector for span.noline is introduced, which hides the tile boundaries.
@@ -339,13 +284,7 @@ coordinates.f72.hole  { stroke: blue; fill: none;}
 span.noline { display:none; }
 ```
 
-
-
-
-<p id="gdcalert4" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/Explainer3.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/Explainer3.png "image_tooltip")
+![Tiled vector data, tiles hidden](images/vector-tiles-hidden.png "image_tooltip")
 
 
 A video demo of this feature is [available](https://www.youtube.com/watch?v=ctGrhFgAONE). 
@@ -360,10 +299,7 @@ Perhaps the most important characteristic of Web maps that is essential for stan
 
 
 
-<p id="gdcalert5" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/Explainer4.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert6">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/Explainer4.png "image_tooltip")
+![Tiled coordinate reference systems](images/tiled-coordinate-reference-systems.png "Tiled coordinate reference systems")
 
 
 <h3 id="linking">Linking</h3>
@@ -377,7 +313,7 @@ Perhaps the most important characteristic of Web maps that is essential for stan
 <h5 id="the-text-mapml-mime-type">The text/mapml MIME type</h5>
 
 
-So, how to make it simple to make Web maps?  In order to allow HTML authors to make use of existing cartographic services on the Web, such as Web Map Services (WMS) and Web Map Tile Services (WMTS) we propose to create a new document and associated MIME type, text/mapml, which can be used by HTML authors and map services to support the key use case of publishing a Web map, with about the same authoring complexity as that of publishing a `<video>`, a `<audio>` or an `<img>`, that is, by using the `<layer src=”[https://example.org/map/document/url/](https://example.org/map/document/url/)”></layer>` [formulation](#bookmark=id.p8jt8aahpf9q). 
+So, how to make it simple to make Web maps?  In order to allow HTML authors to make use of existing cartographic services on the Web, such as Web Map Services (WMS) and Web Map Tile Services (WMTS) we propose to create a new document and associated MIME type, text/mapml, which can be used by HTML authors and map services to support the key use case of publishing a Web map, with about the same authoring complexity as that of publishing a `<video>`, a `<audio>` or an `<img>`, that is, by using the `<layer src=”https://example.org/map/document/url/”></layer>` [formulation](#bookmark1). 
 
 The proposed doctype for such a map document is  **`<!doctype mapml>`**, which signals to the HTML parser that it is parsing a MapML document. The root element of a MapML document is `<mapml>`. Like HTML, a MapML document has a `<head>` element, for map document metadata, and a `<body>` for map content.  The content of the document is MapML, that is, the elements from this proposal, which are rendered via coordinates in the coordinate system designated by the `<map>` (projection attribute).
 
@@ -406,12 +342,7 @@ It’s one thing to have an element like `<layer>` to provide the client logic f
 
 Results in a rendered map widget UI with links to mutually exclusive options:
 
-
-
-<p id="gdcalert6" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/Explainer5.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert7">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/Explainer5.png "image_tooltip")
+![Named layer styles](images/states-population-style.png "Named layer styles")
 
 
 Selecting the ‘pophatch’ link responds with a different MapML document:
@@ -432,10 +363,8 @@ Selecting the ‘pophatch’ link responds with a different MapML document:
 
 which replaces that layer’s browsing context with a different representation of the layer:
 
-<p id="gdcalert7" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/Explainer6.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert8">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
-
-![alt_text](images/Explainer6.png "image_tooltip")
+![Alternate layer style](images/states-pophatch-style.png "Alternate layer style")
 
 In the above code example, a MapML document provides links to alternate ‘styles’ of itself.  The current map document is additionally and importantly tagged with the ‘self’ link relation. This link-based facility is very powerful, because what constitutes a ‘style’ for the current map document is in the eye of the document author, and is not limited to a representation with an alternate stylesheet applied to the same data. What is linked to as a ‘style’ may be a radically different rendering of ‘this layer’,even different data, for example a satellite view vs. a topographic/street map rendering (which are obviously not simply different stylesheet renderings of the same data, as in the above example, but are in fact different data for the same extent). 
 
@@ -467,7 +396,7 @@ Geographic Information Systems allow us to provide the same data in a variety of
 
 This feature could enable federation of map services in a way similar to the ‘federation’ of the HTML Web today, in that in today’s Web, authors decide to link to others’ Web sites and so the federation of sites constituting the Web is enabled.  The MapML-enabled Web should follow a similar path, in that not every Web map needs or can contain all the map information in the world.  So, links should be used to allow map authors to link to others maps in a similar way.  I believe this blends with or is the same as the Links between locations use case, below.
 
-In the `<feature>` markup [shown above](#bookmark=id.b15ws5i0h0lr), a standard hyperlink is shown, wrapped around the outer polygon coordinates of a feature’s geometry:
+In the `<feature>` markup [shown above](#bookmark2), a standard hyperlink is shown, wrapped around the outer polygon coordinates of a feature’s geometry:
 
 
 ```
@@ -520,10 +449,8 @@ The objective of this project is to get Web browser projects to agree that Web m
 
 Contributions, advice and support from the following people are gratefully acknowledged:
 
-Benoît Chagnon, Brian Kardell, Michael SmithTM, Robert Linder, Joan Maso, Keith Pomakis, Gil Heo, Jérôme  Amelia Bellamy-Royds, Nic Chan, Nick Fitzsimmons, Simon Pieters, Tom Kralidis, Daniel Morissette, Chris Hodgson
+Benoît Chagnon, Brian Kardell, Michael<sup>tm</sup> Smith, Robert Linder, Joan Maso, Keith Pomakis, Gil Heo, Jérôme St-Louis,  Amelia Bellamy-Royds, Nic Chan, Nick Fitzsimmons, Simon Pieters, Tom Kralidis, Daniel Morissette, Chris Hodgson
 
 If I’ve forgotten to mention you, please open an issue.
 
 Errors and omissions are certainly my own; if you spot a correction needed in the above, please open an issue. 
-
-
