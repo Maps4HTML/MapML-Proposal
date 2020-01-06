@@ -299,7 +299,7 @@ Perhaps the most important characteristic of Web maps that is essential for stan
 
 
 
-![Tiled coordinate reference systems](https://maps4html.github.io/MapML/spec/images/figure-1.png "Tiled coordinate reference systems")
+![Tiled coordinate reference systems](images/tiled-coordinate-reference-systems.png "Tiled coordinate reference systems")
 
 
 <h3 id="linking">Linking</h3>
