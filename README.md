@@ -283,7 +283,7 @@ In the next screen capture, below, a CSS selector for span.noline is introduced,
 ```css
 coordinates.f72.outer { stroke: blue; fill: #DAA520; }
 coordinates.f72.hole { stroke: blue; fill: none; }
-span.noline { display:none; }
+span.noline { display: none; }
 ```
 
 ![Tiled vector data, tiles hidden](images/vector-tiles-hidden.png "image_tooltip")
