@@ -1,4 +1,4 @@
-<h1>The Map Markup Language (MapML) proposal</h1>
+<h1>The MapML (Map Markup Language) proposal</h1>
 
 
 <h2>Author</h2>
