@@ -134,7 +134,7 @@ The processing model is similar, and related to that of `<form action="">`, in t
 ```
 
 
-The reason for specifying this as an extension of the `<link>` element is because there can be more than a single template processed within such an extent, retrieving image or document resources for each, and rendering the result in document order, for example, geometries and labels for a single “layer” may be rendered via different resource templates / links ([example](http://geogratis.gc.ca/mapml/en/osmtile/cbmt/)).
+The reason for specifying this as an extension of the `<link>` element is because there can be more than a single template processed within such an extent, retrieving image or document resources for each, and rendering the result in document order, for example, geometries and labels for a single “layer” may be rendered via different resource templates / links ([example](https://geogratis.gc.ca/mapml/en/osmtile/cbmt/)).
 
 <h4 id="the-input-element">The <a href="https://maps4html.org/MapML/spec/#the-input-element"><code>&lt;input&gt;</code></a> element</h4>
 
@@ -424,7 +424,7 @@ Links between locations could be marked up similarly to links between services a
 
 There are many older browsers still in use on the Web, and they will likely be in use for many years to come, for a variety of reasons.  Fortunately, “client-side image maps” were very popular on the Web at one stage, and this functionality is well supported by older browsers.  For HTML authors who wish to provide a Web mapping experience for users of these older browsers, it should be possible to provide “fallback” markup that enables the core map experience they wish users to have, while providing a progressively enhanced experience for users of evergreen browsers, without relying on archaic scripting APIs.
 
-If `<area>` elements are present (for fallback) as child elements of `<map>`, they are (progressively, if the conditions warrant) treated as `<layer>` elements containing a single geographic feature, with coordinates in the `coords` attribute being interpreted as being valid pixel coordinates in the map’s locally defined map coordinate system.   More detail and a working example of how graceful degradation and progressive enhancement could work in this proposal is available [here](http://maps4html.org/Web-Map-Custom-Element/blog/progressive-web-maps.html).
+If `<area>` elements are present (for fallback) as child elements of `<map>`, they are (progressively, if the conditions warrant) treated as `<layer>` elements containing a single geographic feature, with coordinates in the `coords` attribute being interpreted as being valid pixel coordinates in the map’s locally defined map coordinate system.   More detail and a working example of how graceful degradation and progressive enhancement could work in this proposal is available [here](https://maps4html.org/Web-Map-Custom-Element/blog/progressive-web-maps.html).
 
 <h2 id="detailed-design-discussion">Detailed design discussion</h2>
 
