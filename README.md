@@ -434,7 +434,7 @@ If `<area>` elements are present (for fallback) as child elements of `<map>`, th
 
 This proposal is being [evaluated](https://github.com/Maps4HTML/MapML/labels/Requirements%20Evaluation) against the [Use Cases and Requirements](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/) for Web mapping, to identify gaps between the required functionality and the polyfilled behaviour.
 
-<h2 id="considered-alternatives">Considered alternatives</h2>
+<h2 id="considered-alternative-designs-of-mapml">Considered alternative designs of MapML</h2>
 
 
 TBD - we have considered many alternatives, I have just run out of steam to document them, at the moment. Also this document is already quite long.  As things progress, I will add content here.
