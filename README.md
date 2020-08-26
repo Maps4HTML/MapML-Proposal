@@ -77,7 +77,7 @@ The Extensible Web Manifesto calls for iterative development and evolution of pl
 
 To allow authors to create declarative Web maps that have approximately the same authoring complexity as `<video>` or `<audio>` elements do today, we propose to extend the processing model of the currently existing HTML `<map>` element.  The current HTML `<map>` element, with its associated `<img>` and child `<area>` elements constitutes a simple Web map, wherein the pixel-based coordinate system of the `<img>` element is shared and used by the `<map>`’s child `<area>` elements to draw geometries to act as hyperlinks.  This relationship, that of parent node-child node with a shared coordinate system is an ideal extension point for more dynamic Web mapping. If it turns out that the code involved in the `<map>` element implementation is too much like spaghetti, we will have to create a new and similar element anyway.  So if possible we should avoid that particular form of technical debt and adopt, maintain and extend the existing `<map>` element.
 
-The proposed extension would create a standard `<map>` widget that contains controls in a closed shadow root, (similar to `<video>` today), with child `<layer>` elements which are in, and may contain, light DOM map-related markup, the vocabulary of which is also part of this proposal.  A working [example custom element prototype](https://geogratis.gc.ca/mapml/en/cbmtile/cbmt/) is available (although it’s not yet a fully compliant ‘polyfill’. For one thing, it doesn’t work on Webkit due to the use of custom built-in elements. A parallel `<geo-map>` autonomous custom element suite is available for Webkit.  For another, the light DOM content of `<layer>` is not currently active or available as an API).
+The proposed extension would create a standard `<map>` widget that contains controls in a user agent shadow root, (similar to `<video>` today), with child [`<layer>`](#the-layer-element) elements which are in, and may contain, light DOM map-related markup, the vocabulary of which is also part of this proposal.
 
 
 
@@ -424,6 +424,13 @@ Links between locations could be marked up similarly to links between services a
 There are many older browsers still in use on the Web, and they will likely be in use for many years to come, for a variety of reasons.  Fortunately, “client-side image maps” were very popular on the Web at one stage, and this functionality is well supported by older browsers.  For HTML authors who wish to provide a Web mapping experience for users of these older browsers, it should be possible to provide “fallback” markup that enables the core map experience they wish users to have, while providing a progressively enhanced experience for users of evergreen browsers, without relying on archaic scripting APIs.
 
 If `<area>` elements are present (for fallback) as child elements of `<map>`, they are (progressively, if the conditions warrant) treated as `<layer>` elements containing a single geographic feature, with coordinates in the `coords` attribute being interpreted as being valid pixel coordinates in the map’s locally defined map coordinate system.   More detail and a working example of how graceful degradation and progressive enhancement could work in this proposal is available [here](https://maps4html.org/Web-Map-Custom-Element/blog/progressive-web-maps.html).
+
+<h4 id="polyfill">Polyfill</h4>
+
+- A [custom `<map>` element prototype](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-web-map.html) is available, although it’s not yet a fully compliant ‘polyfill’. Unfortunately, `<map>` _as a custom element_ has a [severe accessibility issue](https://github.com/w3c/html-aam/issues/292), due to the nature of current implementations of `<map>` in browsers. The prototype [doesn’t work on Webkit](https://caniuse.com/#feat=mdn-api_customelementregistry_builtin) due to the use of unsupported custom built-in elements.
+- A parallel [`<mapml-viewer>`](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-mapml-viewer.html) (see [demo](https://geogratis.gc.ca/mapml/)) autonomous custom element suite is available in all major browsers.  
+
+The light DOM content of `<layer>` is not currently active or available as an API.
 
 <h2 id="detailed-design-discussion">Detailed design discussion</h2>
 
