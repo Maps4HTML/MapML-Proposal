@@ -56,8 +56,7 @@ In improving the choices among mapping services available through the Web platfo
 
 
 
-*   Changing the operating model or availability of existing spatial (map) content management systems, APIs and Web Services.
-*   Backwards-incompatible changes to HTML / breaking the Web
+*   Allow integration with the operating model or availability of existing spatial (map) content management systems, APIs and Web Services. For example, the evolving standards of the <a href="https://ogcapi.ogc.org/"><abbr title="Open Geospatial Consortium">OGC</abbr> APIs</a>.
 
 <h3 id="alternative-approaches">Alternative Approaches</h3>
 
