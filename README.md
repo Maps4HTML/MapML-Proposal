@@ -1,4 +1,4 @@
-<h1>The MapML (Map Markup Language) proposal</h1>
+<h1>The MapML (Map Markup Language) explainer</h1>
 
 
 <h2>Author</h2>
@@ -28,10 +28,10 @@ The goal of this proposal is to bridge the gap between the two communities in a 
 
 Web maps today are created using a wide range of technology stacks on both the client and server, some standard, some open, and some proprietary.  The complexity of choices and the wide variety of technologies required to create Web maps results in maps of highly variable usability and accessibility.  This has in turn led to the creation of centralized mapping services, that may or may not be implemented using Web technology; in some cases, mapping services which work well on desktop Web browsers mostly bypass the mobile Web through creation of mobile platform mapping apps, where the ‘rules of the Web platform’ (such as device permissions) do not apply.  Some centralized mapping services, both on the Web but especially on mobile technology platforms, are constructed for the purpose of tracking the user’s location and their locations of (search) interest, and using that private location information to market and re-sell highly targeted advertising. 
 
-<h3 id="so-what-is-the-problem-to-solve">So, What Is The Problem to Solve?</h3>
+The problem to be solved, therefore, is to reduce the threshold complexity of creating accessible, usable and privacy-preserving Web maps, and to enable full use of Web platform standards such as HTML, URL, SVG, CSS and JavaScript in map creation, styling, presentation and interaction. 
 
+<h3 id="the-proposal">The Proposal</h3>
 
-The problem to be solved, therefore, is to reduce the threshold complexity of creating accessible and usable Web maps, and to enable full use of Web platform standards such as HTML, URL, SVG, CSS and JavaScript in map creation, styling, presentation and interaction. 
 
 To solve the problem, our approach is to identify the Web map processing that is currently performed by JavaScript libraries which should instead be defined as elements and attributes supported by CSS, while at the same time, we identify the Web map processing that should remain in the JavaScript domain as a standardized DOM API. By building the core behaviour of maps and layers into HTML, Web authors who want to build simple maps into their pages can easily do so, supported by core platform technologies, with the power of JavaScript available to enhance the core map and layer behaviour.
 
