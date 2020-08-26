@@ -33,7 +33,7 @@ The problem to be solved, therefore, is to reduce the threshold complexity of cr
 <h3 id="the-proposal">The Proposal</h3>
 
 
-To solve the problem, our approach is to identify the Web map processing that is currently performed by JavaScript libraries which should instead be defined as elements and attributes supported by CSS, while at the same time, we identify the Web map processing that should remain in the JavaScript domain as a standardized DOM API. By building the core behaviour of maps and layers into HTML, Web authors who want to build simple maps into their pages can easily do so, supported by core platform technologies, with the power of JavaScript available to enhance the core map and layer behaviour.
+To solve <a href="#the-problem">the problem</a>, our approach is to identify the Web map processing that is currently performed by JavaScript libraries which should instead be defined - in accordance with the <a href="https://www.w3.org/TR/html-design-principles/">HTML Design Principles</a> - as elements and attributes supported by CSS, while at the same time, we identify the Web map processing that should remain in the JavaScript domain as a standardized DOM API. By building the core behaviour of maps and layers into HTML, Web authors who want to build simple maps into their pages can easily do so, supported by core platform technologies, with the power of JavaScript available to enhance the core map and layer behaviour.
 
 By lowering the barriers for Web map authors in this way, we will improve the usability, and standardize the accessibility of Web maps.  Through making map creation a matter of applying appropriately crafted Web platform standards, we will create the conditions to multiply the choices of mapping services offered to authors and users of the Web. 
 
@@ -44,7 +44,7 @@ In improving the choices among mapping services available through the Web platfo
 
 
 
-*   Follow the HTML Design Principles to create HTML elements and attributes that allow authors to create dynamic, usable and accessible Web maps about as easily as they can embed an image, a video or a podcast today.
+*   Define the means to allow authors to create dynamic, usable and accessible Web maps about as easily as they can embed an image, a video or a podcast today.
 *   Define and embed accessibility of map feature and location information into HTML for use by screen readers and other assistive technology.
 *   Define and design security of map information considerations into the Web platform.
 *   Define the markup to create mapping mashups that doesn’t necessarily require scripting or detailed mapping server technology knowledge i.e. that can be accomplished about as easily as linking to a document.
