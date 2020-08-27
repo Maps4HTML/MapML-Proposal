@@ -42,7 +42,7 @@ The goal of this proposal is to bridge the gap between the two communities in a 
   - [Tiled Coordinate Reference Systems](#tiled-coordinate-reference-systems)
   - [Linking](#linking)
   - [Graceful Degradation and Progressive Enhancement](#graceful-degradation-and-progressive-enhancement)
-    - [Polyfill](#polyfill)
+  - [Polyfill](#polyfill)
 - [Detailed design discussion](#detailed-design-discussion)
   - [Use Cases and Requirements](#use-cases-and-requirements)
 - [Considered Alternative Designs of MapML](#considered-alternative-designs-of-mapml)
@@ -451,7 +451,7 @@ There are many older browsers still in use on the Web, and they will likely be i
 
 If `<area>` elements are present (for fallback) as child elements of `<map>`, they are (progressively, if the conditions warrant) treated as `<layer>` elements containing a single geographic feature, with coordinates in the `coords` attribute being interpreted as being valid pixel coordinates in the map’s locally defined map coordinate system.   More detail and a working example of how graceful degradation and progressive enhancement could work in this proposal is available [here](https://maps4html.org/Web-Map-Custom-Element/blog/progressive-web-maps.html).
 
-<h4 id="polyfill">Polyfill</h4>
+<h3 id="polyfill">Polyfill</h3>
 
 - A [custom `<map>` element prototype](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-web-map.html) is available, although it’s not yet a fully compliant ‘polyfill’. Unfortunately, `<map>` _as a custom element_ has a [severe accessibility issue](https://github.com/w3c/html-aam/issues/292), due to the nature of current implementations of `<map>` in browsers. The prototype [doesn’t work on Webkit](https://caniuse.com/#feat=mdn-api_customelementregistry_builtin) due to the use of unsupported custom built-in elements.
 - A parallel [`<mapml-viewer>`](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-mapml-viewer.html) (see [demo](https://geogratis.gc.ca/mapml/)) autonomous custom element suite is available in all major browsers.  
