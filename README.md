@@ -9,7 +9,7 @@ Peter Rushforth
 <h2>Participate</h2>
 
 
-The [Maps for HTML Community Group](https://www.w3.org/community/maps4html/) is iterating on the problem space.  You can contribute to the on-going discussion and documentation of [Use Cases and Requirements for Web mapping](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/). Alternatively, if your organization is a member of the [Web Platform Incubator Community Group](https://www.w3.org/community/WICG/) (WICG) and you are able to contribute there but not elsewhere, please consider contributing through the [WICG forum on Web mapping](https://discourse.wicg.io/c/web-mapping/22).  We would love to hear from you. 
+The W3C [Maps for HTML Community Group](https://www.w3.org/community/maps4html/) is iterating on the problem space.  You can contribute to the on-going discussion and documentation of [Use Cases and Requirements for Web mapping](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/). Alternatively, if your organization is a member of the [Web Platform Incubator Community Group](https://www.w3.org/community/WICG/) (WICG) and you are able to contribute there but not elsewhere, please consider contributing through the [WICG forum on Web mapping](https://discourse.wicg.io/c/web-mapping/22).  We would love to hear from you. 
 
 [Issue tracker for this explainer](https://github.com/Maps4HTML/MapML-Proposal/issues)
 
@@ -45,7 +45,7 @@ The goal of this proposal is to bridge the gap between the two communities in a 
     - [Polyfill](#polyfill)
 - [Detailed design discussion](#detailed-design-discussion)
   - [Use Cases and Requirements](#use-cases-and-requirements)
-- [Considered Alternative Designs of MapMl](#considered-alternative-designs-of-mapml)
+- [Considered Alternative Designs of MapML](#considered-alternative-designs-of-mapml)
 - [Stakeholder Feedback / Opposition](#stakeholder-feedback--opposition)
 - [References and Acknowledgements](#references-and-acknowledgements)
 
@@ -82,7 +82,7 @@ In improving the choices among mapping services available through the Web platfo
 
 
 
-*   Allow integration with the operating model or availability of existing spatial (map) content management systems, APIs and Web Services. For example, the evolving standards of the <a href="https://ogcapi.ogc.org/"><abbr title="Open Geospatial Consortium">OGC</abbr> APIs</a>.
+*   Interoperability with the operating model or availability of existing spatial (map) content management systems, APIs and Web Services. For example, the evolving <a href="https://ogcapi.ogc.org/"><abbr title="Open Geospatial Consortium">OGC</abbr> API</a> standards.
 
 <h3 id="alternative-approaches">Alternative Approaches</h3>
 
