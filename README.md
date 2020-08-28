@@ -1,4 +1,4 @@
-<h1>The MapML (Map Markup Language) proposal</h1>
+<h1>The MapML (Map Markup Language) explainer</h1>
 
 
 <h2>Author</h2>
@@ -9,7 +9,7 @@ Peter Rushforth
 <h2>Participate</h2>
 
 
-The [Maps for HTML Community Group](https://www.w3.org/community/maps4html/) is iterating on the problem space.  You can contribute to the on-going discussion and documentation of [Use Cases and Requirements for Web mapping](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/). Alternatively, if your organization is a member of the [Web Platform Incubator Community Group](https://www.w3.org/community/WICG/) (WICG) and you are able to contribute there but not elsewhere, please consider contributing through the [WICG forum on Web mapping](https://discourse.wicg.io/c/web-mapping/22).  We would love to hear from you. 
+The W3C [Maps for HTML Community Group](https://www.w3.org/community/maps4html/) is iterating on the problem space.  You can contribute to the on-going discussion and documentation of [Use Cases and Requirements for Web mapping](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/). Alternatively, if your organization is a member of the [Web Platform Incubator Community Group](https://www.w3.org/community/WICG/) (WICG) and you are able to contribute there but not elsewhere, please consider contributing through the [WICG forum on Web mapping](https://discourse.wicg.io/c/web-mapping/22).  We would love to hear from you. 
 
 [Issue tracker for this explainer](https://github.com/Maps4HTML/MapML-Proposal/issues)
 
@@ -23,17 +23,43 @@ Web maps are a well-established domain of Web design, and there exist popular, m
 
 The goal of this proposal is to bridge the gap between the two communities in a way that may have positive benefits for both sides. On the one hand, the Web mapping community is burdened by intermediaries and the consequent barriers to widespread creation and use of maps and public map information. On the other hand, the Web platform, especially the mobile Web, needs more and better high-level features and less JavaScript. Simple yet extensible Web maps in HTML, that equally leverage the other platform standards, is the feature that both communities need to come together to improve usability and accessibility for users.
 
+<h2>Table Of Contents</h2>
+
+- [The Problem](#the-problem)
+- [The Proposal](#the-proposal)
+- [Goals](#goals)
+- [Non-Goals](#non-goals)
+- [Alternative Approaches](#alternative-approaches)
+- [A High Level API](#a-high-level-api)
+  - [The `<map>` element](#the-map-element)
+  - [The `<layer>` element](#the-layer-element)
+  - [The `<extent>` element](#the-extent-element)
+  - [The `<input>` element](#the-input-element)
+  - [The `<title>` element](#the-title-element)
+  - [The `<feature>` element](#the-feature-element)
+  - [Tiled vector features](#tiled-vector-features)
+- [Key Scenarios](#key-scenarios)
+  - [Tiled Coordinate Reference Systems](#tiled-coordinate-reference-systems)
+  - [Linking](#linking)
+  - [Graceful Degradation and Progressive Enhancement](#graceful-degradation-and-progressive-enhancement)
+  - [Polyfill](#polyfill)
+- [Detailed design discussion](#detailed-design-discussion)
+  - [Use Cases and Requirements](#use-cases-and-requirements)
+- [Considered Alternative Designs of MapML](#considered-alternative-designs-of-mapml)
+- [Stakeholder Feedback / Opposition](#stakeholder-feedback--opposition)
+- [References and Acknowledgements](#references-and-acknowledgements)
+
 <h3 id="the-problem">The Problem</h3>
 
 
-Web maps today are created using a wide range of technology stacks on both the client and server, some standard, some open, and some proprietary.  The complexity of choices and the wide variety of technologies required to create Web maps results in maps of highly variable usability and accessibility.  This has in turn led to the creation of centralized mapping services, that may or may not be implemented using Web technology; in some cases, mapping services which work well on desktop Web browsers mostly bypass the mobile Web through creation of mobile platform mapping apps, where the ‘rules of the Web platform’ (such as device permissions) do not apply.  Some centralized mapping services, both on the Web but especially on mobile technology platforms, are constructed for the purpose of tracking the user’s location and their locations of (search) interest, and using that private location information to market and re-sell highly targeted advertising. 
+Web maps today are created using a wide range of technology stacks on both the client and server, some standard, some open, and some proprietary.  The complexity of choices and the wide variety of technologies required to create Web maps results in <a href="https://github.com/Malvoz/web-maps-wcag-evaluation/blob/master/README.md">maps of highly variable usability and accessibility</a>.  This has in turn led to the creation of centralized mapping services, that may or may not be implemented using Web technology; in some cases, mapping services which work well on desktop Web browsers mostly bypass the mobile Web through creation of mobile platform mapping apps, where the ‘rules of the Web platform’ (such as device permissions) do not apply.  Some centralized mapping services, both on the Web but especially on mobile technology platforms, are constructed for the purpose of tracking the user’s location and their locations of (search) interest, and using that private location information to market and re-sell highly targeted advertising. 
 
-<h3 id="so-what-is-the-problem-to-solve">So, What Is The Problem to Solve?</h3>
+The problem to be solved, therefore, is to reduce the threshold complexity of creating accessible, usable and privacy-preserving Web maps, and to enable full use of Web platform standards such as HTML, URL, SVG, CSS and JavaScript in map creation, styling, presentation and interaction. 
+
+<h3 id="the-proposal">The Proposal</h3>
 
 
-The problem to be solved, therefore, is to reduce the threshold complexity of creating accessible and usable Web maps, and to enable full use of Web platform standards such as HTML, URL, SVG, CSS and JavaScript in map creation, styling, presentation and interaction. 
-
-To solve the problem, our approach is to identify the Web map processing that is currently performed by JavaScript libraries which should instead be defined as elements and attributes supported by CSS, while at the same time, we identify the Web map processing that should remain in the JavaScript domain as a standardized DOM API. By building the core behaviour of maps and layers into HTML, Web authors who want to build simple maps into their pages can easily do so, supported by core platform technologies, with the power of JavaScript available to enhance the core map and layer behaviour.
+To solve <a href="#the-problem">the problem</a>, our approach is to identify the Web map processing that is currently performed by JavaScript libraries which should instead be defined - in accordance with the <a href="https://www.w3.org/TR/html-design-principles/">HTML Design Principles</a> - as elements and attributes supported by CSS, while at the same time, we identify the Web map processing that should remain in the JavaScript domain as a standardized DOM API. By building the core behaviour of maps and layers into HTML, Web authors who want to build simple maps into their pages can easily do so, supported by core platform technologies, with the power of JavaScript available to enhance the core map and layer behaviour.
 
 By lowering the barriers for Web map authors in this way, we will improve the usability, and standardize the accessibility of Web maps.  Through making map creation a matter of applying appropriately crafted Web platform standards, we will create the conditions to multiply the choices of mapping services offered to authors and users of the Web. 
 
@@ -44,7 +70,7 @@ In improving the choices among mapping services available through the Web platfo
 
 
 
-*   Follow the HTML Design Principles to create HTML elements and attributes that allow authors to create dynamic, usable and accessible Web maps about as easily as they can embed an image, a video or a podcast today.
+*   Define the means to allow authors to create dynamic, usable and accessible Web maps about as easily as they can embed an image, a video or a podcast today.
 *   Define and embed accessibility of map feature and location information into HTML for use by screen readers and other assistive technology.
 *   Define and design security of map information considerations into the Web platform.
 *   Define the markup to create mapping mashups that doesn’t necessarily require scripting or detailed mapping server technology knowledge i.e. that can be accomplished about as easily as linking to a document.
@@ -56,8 +82,7 @@ In improving the choices among mapping services available through the Web platfo
 
 
 
-*   Changing the operating model or availability of existing spatial (map) content management systems, APIs and Web Services.
-*   Backwards-incompatible changes to HTML / breaking the Web
+*   Interoperability with the operating model or availability of existing spatial (map) content management systems, APIs and Web Services. For example, the evolving <a href="https://ogcapi.ogc.org/"><abbr title="Open Geospatial Consortium">OGC</abbr> API</a> standards.
 
 <h3 id="alternative-approaches">Alternative Approaches</h3>
 
@@ -71,21 +96,21 @@ In improving the choices among mapping services available through the Web platfo
 <h3 id="a-high-level-api">A High Level API</h3>
 
 
-The Extensible Web Manifesto calls for iterative development and evolution of platform features, starting with low-level ‘primitives’ and resulting eventually in high-level features.  Although there are several low-level primitive proposals inherent or implicated in this proposal, overall this can be seen as a proposal for a high-level feature.  That feature is declarative dynamic Web maps in HTML.  Web mapping is a mature category of JavaScript library that is well into the stage of its development life cycle that some of the aggregate characteristics of those libraries should be incorporated into the platform.  As such, this proposal captures some of the ‘cow paths’ of open and closed source JavaScript Web mapping libraries, as well as taking into consideration how to incorporate server-side mapping services and APIs.
+The <a href="https://extensiblewebmanifesto.org/">Extensible Web Manifesto</a> calls for iterative development and evolution of platform features, starting with low-level ‘primitives’ and resulting eventually in high-level features.  Although there are several low-level primitive proposals inherent or implicated in this proposal, overall this can be seen as a proposal for a high-level feature.  That feature is declarative dynamic Web maps in HTML.  Web mapping is a mature category of JavaScript library that is well into the stage of its development life cycle that some of the aggregate characteristics of those libraries should be incorporated into the platform.  As such, this proposal captures some of the ‘cow paths’ of open and closed source JavaScript Web mapping libraries, as well as taking into consideration how to incorporate server-side mapping services and APIs.
 
-<h3 id="the-map-element">The <a href="https://maps4html.org/MapML/spec/#the-map-element"><code>&lt;map&gt;</code></a> element</h3>
+<h4 id="the-map-element">The <a href="https://maps4html.org/MapML/spec/#the-map-element"><code>&lt;map&gt;</code></a> element</h4>
 
 
 To allow authors to create declarative Web maps that have approximately the same authoring complexity as `<video>` or `<audio>` elements do today, we propose to extend the processing model of the currently existing HTML `<map>` element.  The current HTML `<map>` element, with its associated `<img>` and child `<area>` elements constitutes a simple Web map, wherein the pixel-based coordinate system of the `<img>` element is shared and used by the `<map>`’s child `<area>` elements to draw geometries to act as hyperlinks.  This relationship, that of parent node-child node with a shared coordinate system is an ideal extension point for more dynamic Web mapping. If it turns out that the code involved in the `<map>` element implementation is too much like spaghetti, we will have to create a new and similar element anyway.  So if possible we should avoid that particular form of technical debt and adopt, maintain and extend the existing `<map>` element.
 
-The proposed extension would create a standard `<map>` widget that contains controls in a closed shadow root, (similar to `<video>` today), with child `<layer>` elements which are in, and may contain, light DOM map-related markup, the vocabulary of which is also part of this proposal.  A working [example custom element prototype](https://geogratis.gc.ca/mapml/en/cbmtile/cbmt/) is available (although it’s not yet a fully compliant ‘polyfill’. For one thing, it doesn’t work on Webkit due to the use of custom built-in elements. A parallel `<geo-map>` autonomous custom element suite is available for Webkit.  For another, the light DOM content of `<layer>` is not currently active or available as an API).
+The proposed extension would create a standard `<map>` widget that contains controls in a user agent shadow root, (similar to `<video>` today), with child [`<layer>`](#the-layer-element) elements which are in, and may contain, light DOM map-related markup, the vocabulary of which is also part of this proposal.
 
 
 
 ![The map element](images/map-element.png "The map element")
 
 
-<h3 id="the-layer-element">The <a href="https://maps4html.org/MapML/spec/#the-layer-element"><code>&lt;layer&gt;</code></a> element</h3>
+<h4 id="the-layer-element">The <a href="https://maps4html.org/MapML/spec/#the-layer-element"><code>&lt;layer&gt;</code></a> element</h4>
 
 
 A layer is a primitive abstraction that is shared by many if not most maps, both on and off the Web. Even in the case that a map doesn’t have more than a single layer, the map itself can be considered to be composed of that single layer. A key characteristic of map layers is that they share the same coordinate system as other layers in the map, allowing the rendering engine to lay out and render content over the same coordinate space.  This is in contrast to the normal rendering of HTML elements, which are laid out in document order down the page. There is precedent for the proposed rendering model for maps in HTML, however.  The [client-side image map](https://html.spec.whatwg.org/multipage/image-maps.html#image-maps) of HTML, implemented by the `<img>`, `<map>` and `<area>` elements, has this rendering model; the `<area>`s `coords` attribute are expressed in units of the pixel-based coordinate system of the `<map>`-associated `<img>` element.  An author-friendly system for dynamic Web mapping, such as that intended by this proposal, would make it as simple as possible to automatically layer map content, ideally re-using and extending the markup for `<img>` `<map>` and `<area>` that has become familiar.  A more thorough discussion of how this proposal conforms or relates to the HTML Design Principles is beyond the scope of this explainer, but is available [here](https://www.w3.org/community/maps4html/2019/12/09/the-design-of-mapml/).
@@ -99,7 +124,7 @@ The `<layer>` element renders content by one of two alternate means.  The first 
 
 It’s great that we can imagine a way to extend HTML to include dynamic Web maps using almost-existing browser code infrastructure, but where will layer content as envisioned come from?  Without content, new browser code would not be useful.  What’s needed is a way to get the vast amount of existing content from services that have [well-defined standard and not-so-standard interfaces](https://www.geoseer.net/), into the new HTML-MapML format available at simple URLs, without requiring significant change to the content, but especially without requiring browsers to ‘understand’ interfaces other than the uniform interface of HTTP.  This might seem like a tall order, but a key design constraint followed by HTML-MapML is that the vocabulary itself should represent abstractions that ‘fit’ the existing content, so that if the services by which the content is accessed today were to provide HTML-MapML as a serialization format, then such content would be rendered inherently compatible with browsers, even before script execution.  Such experimentation has formed the basis of significant experimentation by several participants through the [OGC Testbed program](https://www.youtube.com/playlist?list=PLQsQNjNIDU85HBDZWc8aE7EvQKE5nIedK), and has proven to be readily possible in practice, through the creation of [server shims](https://docs.geoserver.org/latest/en/user/community/mapml/index.html).  We anticipate that should the Web community agree to work with the mapping community on this proposal, that we will have success in persuading the public spatial data infrastructures around the world to be made available to the browser in HTML-MapML.
 
-<h3 id="the-extent-element">The <a href="https://maps4html.org/MapML/spec/#the-extent-element"><code>&lt;extent&gt;</code></a> element</h3>
+<h4 id="the-extent-element">The <a href="https://maps4html.org/MapML/spec/#the-extent-element"><code>&lt;extent&gt;</code></a> element</h4>
 
 
 Web maps’ content is, typically, but not exclusively,  provided by content servers associated with server-side Geographic Information Systems and their APIs.  These APIs often share common semantics associated to maps and map features, although typically with differing terminology between services. In order to access the widest variety of map services as possible, we created the  `<extent>` element, which can be a child of the `<layer>` element:
@@ -208,7 +233,7 @@ In the following example, the zoom value is set at 17.  This means for example, 
 
 For server-friendliness, it’s important for the author to establish the axis (and zoom)  bounds on a per-`<link>` template basis.  For example, there may be more than a single tile link template in an `<extent>`, with `<input>`s established to supply variable values to each one’s link template.  The reason might be to define a composite layer from different server image tile pyramids, for example.  One of the tile pyramids might not share the entire set of zoom levels with the other, nor indeed cover the same geographic extent (bounding box).  For this reason, separate zoom and axis bounds should be established by setting up different `<input>` variables to supply the different URL (`<link>`) templates, and thus generate only valid (200 OK) URLs.
 
-<h3 id="the-tile-element">The <a href="https://maps4html.org/MapML/spec/#the-tile-element"><code>&lt;tile&gt;</code></a> element</h3>
+<h4 id="the-tile-element">The <a href="https://maps4html.org/MapML/spec/#the-tile-element"><code>&lt;tile&gt;</code></a> element</h4>
 
 
 The `<tile>` element doesn’t get used too much in practice.  Early on, we defined the `<extent action>` attribute, which made `<extent>` quite `<form>`-like, and which required that the server returned a MapML document with individual `<tile>` elements for each tile.  This meant that each zoom or pan (or resize), would require the server to generate and send a new MapML document, which would then be parsed and rendered by the client.  While functional, it turned out to be “chatty”, and unnecessary. ([Issue #61](https://github.com/Maps4HTML/MapML/issues/61))
@@ -217,7 +242,7 @@ Although the polyfill behaviour has not yet been thoroughly established through 
 
 The `<tile>` element can also be used to serve static MapML content, for example to serve a directory of tiled images that have been statically generated.   An intelligent map client could cache these behind the scenes, and so provide better, perhaps even offline, performance for a map layer.
 
-<h3 id="the-feature-element">The <a href="https://maps4html.org/MapML/spec/#the-feature-element"><code>&lt;feature&gt;</code></a> element</h3>
+<h4 id="the-feature-element">The <a href="https://maps4html.org/MapML/spec/#the-feature-element"><code>&lt;feature&gt;</code></a> element</h4>
 
 
 The `<feature>` element’s design mirrors what Web map developers actually do with vector information, which is commonly encoded in JSON as ‘GeoJSON’.  The feature element has a `<properties>` child element, which is intended for human-readable HTML markup, rendered in its own browsing context such as a popup or pullout, and a `<geometry>` child element for the map-displayable feature content.  The need for a new `<geometry>` element is driven by the need to style and embed links in content, described below.
@@ -263,7 +288,7 @@ The types of vector geometries for which there are proposed elements are:
 
 `<point>`, `<linestring>`, `<polygon>`, `<multipoint>`, `<multilinestring>`, `<multipolygon>` and `<geometrycollection>`.  These types reflect the semantics of their counterparts in GeoJSON and most or all standards-based Geographic Information System vector formats.
 
-<h3 id="tiled-vector-features">Tiled vector features</h3>
+<h4 id="tiled-vector-features">Tiled vector features</h4>
 
 
 The selectability of features’ vector parts is useful in allowing servers to serve tiled or otherwise partitioned feature data without (necessarily) introducing visual or semantic ‘noise’.  The objective of doing so is often (but not exclusively) related to optimizing or minimizing bandwidth consumption; whereas tiled images can consume a lot of bandwidth, relatively (and depending on what content is being represented), tiled vector information can conserve bandwidth while conveying feature semantics both visually and through markup. In the screen capture below, tiled vector features (support simulated with SVG + CSS + JavaScript) are selected and styled in solid (random) colors and outlined in blue. They are displayed with no CSS rule to selectively style or hide ‘artificial’ vector segments introduced by tile boundaries.
@@ -426,6 +451,13 @@ There are many older browsers still in use on the Web, and they will likely be i
 
 If `<area>` elements are present (for fallback) as child elements of `<map>`, they are (progressively, if the conditions warrant) treated as `<layer>` elements containing a single geographic feature, with coordinates in the `coords` attribute being interpreted as being valid pixel coordinates in the map’s locally defined map coordinate system.   More detail and a working example of how graceful degradation and progressive enhancement could work in this proposal is available [here](https://maps4html.org/Web-Map-Custom-Element/blog/progressive-web-maps.html).
 
+<h3 id="polyfill">Polyfill</h3>
+
+- A [custom `<map>` element prototype](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-web-map.html) is available, although it’s not yet a fully compliant ‘polyfill’. Unfortunately, `<map>` _as a custom element_ has a [severe accessibility issue](https://github.com/w3c/html-aam/issues/292), due to the nature of current implementations of `<map>` in browsers. The prototype [doesn’t work on Webkit](https://caniuse.com/#feat=mdn-api_customelementregistry_builtin) due to the use of unsupported custom built-in elements.
+- A parallel [`<mapml-viewer>`](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-mapml-viewer.html) (see [demo](https://geogratis.gc.ca/mapml/)) autonomous custom element suite is available in all major browsers.  
+
+The light DOM content of `<layer>` is not currently active or available as an API.
+
 <h2 id="detailed-design-discussion">Detailed design discussion</h2>
 
 
@@ -434,7 +466,7 @@ If `<area>` elements are present (for fallback) as child elements of `<map>`, th
 
 This proposal is being [evaluated](https://github.com/Maps4HTML/MapML/labels/Requirements%20Evaluation) against the [Use Cases and Requirements](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/) for Web mapping, to identify gaps between the required functionality and the polyfilled behaviour.
 
-<h2 id="considered-alternatives">Considered alternatives</h2>
+<h2 id="considered-alternative-designs-of-mapml">Considered alternative designs of MapML</h2>
 
 
 TBD - we have considered many alternatives, I have just run out of steam to document them, at the moment. Also this document is already quite long.  As things progress, I will add content here.
