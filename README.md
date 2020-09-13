@@ -35,7 +35,7 @@ The goal of this proposal is to bridge the gap between the two communities in a 
   - [The `<layer>` element](#the-layer-element)
   - [The `<extent>` element](#the-extent-element)
   - [The `<input>` element](#the-input-element)
-  - [The `<title>` element](#the-title-element)
+  - [The `<tile>` element](#the-tile-element)
   - [The `<feature>` element](#the-feature-element)
   - [Tiled vector features](#tiled-vector-features)
 - [Key Scenarios](#key-scenarios)
