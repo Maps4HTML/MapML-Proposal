@@ -93,7 +93,7 @@ The <a href="https://extensiblewebmanifesto.org/">Extensible Web Manifesto</a> c
 
 The proposed extension would create a standard [`<map>`](high-level-api.md#the-map-element) widget that contains controls in a user agent shadow root, (similar to `<video>` today), with child [`<layer>`](high-level-api.md#the-layer-element) elements which are in, and may contain, light DOM map-related markup, the vocabulary of which is also part of this proposal.
 
-See the [High-Level API explainer](high-level-api.md) for details on the proposed elements that may be referred to in this proposal.
+**See the [High-Level API explainer](high-level-api.md) for details on the proposed elements** that may be referred to in this proposal.
 
 <h2 id="key-scenarios">Key scenarios</h2>
 
@@ -234,8 +234,8 @@ If `<area>` elements are present (for fallback) as child elements of `<map>`, th
 
 A polyfill for the [High-Level API](high-level-api.md) is available.
 
-- A [custom `<map>` element prototype](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-web-map.html) is available with some caveats; it’s not yet a fully compliant ‘polyfill’. The prototype [doesn’t work in WebKit](https://caniuse.com/#feat=mdn-api_customelementregistry_builtin) due to the use of unsupported custom built-in elements. And unfortunately, **`<map>` as a _custom element_** has a [severe accessibility issue](https://github.com/w3c/html-aam/issues/292), due to the nature of current implementations of `<map>` in some browsers.
-- A parallel [`<mapml-viewer>`](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-mapml-viewer.html) (see [demo](https://geogratis.gc.ca/mapml/)) autonomous custom element suite is available in all major browsers.  
+- A [custom `<map>` element prototype](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-web-map.html) is available with some caveats; it’s not yet a fully compliant ‘polyfill’. The prototype [doesn’t work in WebKit](https://caniuse.com/#feat=mdn-api_customelementregistry_builtin) due to the use of unsupported custom built-in elements. And unfortunately, `<map>` _as a custom element_ has a [severe accessibility issue](https://github.com/w3c/html-aam/issues/292) due to the nature of current implementations in some browsers.
+- A parallel [`<mapml-viewer>`](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-mapml-viewer.html) autonomous custom element suite is available in all major browsers. A [demo](https://geogratis.gc.ca/mapml/) is available.
 
 The light DOM content of `<layer>` is not currently active or available as an API.
 
