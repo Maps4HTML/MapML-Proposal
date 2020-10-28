@@ -1,4 +1,6 @@
-<h1>A High-Level API</h1>
+<h1>A High-Level API for Web Maps</h1>
+
+This is the explainer for the High-Level API of the [MapML Proposal](README.md).
 
 <h2>Table Of Contents</h2>
 
