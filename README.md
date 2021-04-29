@@ -245,7 +245,12 @@ The light DOM content of `<layer>` is not currently active or available as an AP
 <h3 id="use-cases-and-requirements">Use Cases and Requirements</h3>
 
 
-This proposal is being [evaluated](https://github.com/Maps4HTML/MapML/labels/Requirements%20Evaluation) against the [Use Cases and Requirements](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/) for Web mapping, to identify gaps between the required functionality and the polyfilled behaviour.
+This proposal is being [evaluated](https://github.com/Maps4HTML/MapML/labels/Requirements%20Evaluation)
+against the [Use Cases and Requirements for Standardizing Web Maps](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/),
+to identify gaps between the required functionality and the polyfilled behaviour.
+
+See the [MapML Use Case, Requirement, and Capability Matrix](https://maps4html.org/UCR-MapML-Matrix/mapml-ucrs-fulfillment-matrix.html)
+for how MapML compares in capabilities in contrast to existing popular web mapping libraries.
 
 <h2 id="considered-alternative-designs-of-mapml">Considered alternative designs of MapML</h2>
 
