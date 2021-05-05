@@ -4,22 +4,27 @@ This is the explainer for the High-Level API of the [MapML Proposal](README.md).
 
 <h2>Contents</h2>
 
-- [The `<map>` element](#the-map-element)
-- [The `<layer>` element](#the-layer-element)
-- [The `<extent>` element](#the-extent-element)
-- [The `<input>` element](#the-input-element)
-- [The `<tile>` element](#the-tile-element)
-- [The `<feature>` element](#the-feature-element)
+- [Web mapping elements](#web-mapping-elements)
+  - [The `<map>` element](#the-map-element)
+  - [The `<layer>` element](#the-layer-element)
+- [The `text/mapml` MIME type](#the-text-mapml-mime-type)
+- [Map markup elements](#map-markup-elements)
+  - [The `<extent>` element](#the-extent-element)
+  - [The `<input>` element](#the-input-element)
+  - [The `<tile>` element](#the-tile-element)
+  - [The `<feature>` element](#the-feature-element)
 - [Tiled vector features](#tiled-vector-features)
 
-<h3 id="the-map-element">The <a href="https://maps4html.org/MapML/spec/#the-map-element"><code>&lt;map&gt;</code></a> element</h4>
+<h3 id="web-mapping-elements">Web mapping elements</h3>
+
+<h4 id="the-map-element">The <a href="https://maps4html.org/MapML/spec/#the-map-element"><code>&lt;map&gt;</code></a> element</h4>
 
 To allow authors to create declarative Web maps that have approximately the same authoring complexity as `<video>` or `<audio>` elements do today, we propose to extend the processing model of the currently existing HTML `<map>` element.  The current HTML `<map>` element, with its associated `<img>` and child `<area>` elements constitutes a simple Web map, wherein the pixel-based coordinate system of the `<img>` element is shared and used by the `<map>`’s child `<area>` elements to draw geometries to act as hyperlinks.  This relationship, that of parent node-child node with a shared coordinate system is an ideal extension point for more dynamic Web mapping. If it turns out that the code involved in the `<map>` element implementation is too much like spaghetti, we will have to create a new and similar element anyway.  So if possible we should avoid that particular form of technical debt and adopt, maintain and extend the existing `<map>` element.
 
 ![The map element](images/map-element.png "The map element")
 
 
-<h3 id="the-layer-element">The <a href="https://maps4html.org/MapML/spec/#the-layer-element"><code>&lt;layer&gt;</code></a> element</h4>
+<h4 id="the-layer-element">The <a href="https://maps4html.org/MapML/spec/#the-layer-element"><code>&lt;layer&gt;</code></a> element</h4>
 
 
 A layer is a primitive abstraction that is shared by many if not most maps, both on and off the Web. Even in the case that a map doesn’t have more than a single layer, the map itself can be considered to be composed of that single layer. A key characteristic of map layers is that they share the same coordinate system as other layers in the map, allowing the rendering engine to lay out and render content over the same coordinate space.  This is in contrast to the normal rendering of HTML elements, which are laid out in document order down the page. There is precedent for the proposed rendering model for maps in HTML, however.  The [client-side image map](https://html.spec.whatwg.org/multipage/image-maps.html#image-maps) of HTML, implemented by the `<img>`, `<map>` and `<area>` elements, has this rendering model; the `<area>`s `coords` attribute are expressed in units of the pixel-based coordinate system of the `<map>`-associated `<img>` element.  An author-friendly system for dynamic Web mapping, such as that intended by this proposal, would make it as simple as possible to automatically layer map content, ideally re-using and extending the markup for `<img>` `<map>` and `<area>` that has become familiar.  A more thorough discussion of how this proposal conforms or relates to the HTML Design Principles is beyond the scope of this explainer, but is available [here](https://www.w3.org/community/maps4html/2019/12/09/the-design-of-mapml/).
@@ -29,11 +34,19 @@ A layer is a primitive abstraction that is shared by many if not most maps, both
 
 Layers are added to maps by adding `<layer>` elements as children of the `<map>` element. Every `<layer>` added to the map must share the same coordinate system declared by the `<map>` in its `projection` attribute. If the layer added does not share the same coordinate system as the `<map>`, it will not be displayed and the layer will be ‘disabled’ in the layer control of the map widget. The set of possible coordinate systems is small, and the values enumerated by the MapML specification.  If no `projection` attribute is specified, the default coordinate system is that of Web Mercator, signified by the `OSMTILE` value. 
 
-The `<layer>` element renders content by one of two alternate means.  The first is by referring to remote content at a URL specified by the `src` attribute. This is described under [Key Scenarios](README.md#key-scenarios) in the main explainer. The response to a request of the `src` value should be “MapML” content, identified over the network by the `text/mapml` media type.  MapML is intended to be part of the HTML vocabulary and to be parsed with the (almost) unmodified HTML parser.  To achieve that, some elements in the [MapML specification](https://maps4html.org/MapML/spec/) rely on and extend the definitions of elements of the same name in HTML. The second rendering path for `<layer>` is to include “MapML” content inline in light DOM. 
+The `<layer>` element renders content by one of two alternate means.  The first is by referring to remote content at a URL specified by the `src` attribute. This is described in the [Key Scenarios](key-scenarios.md) explainer. The response to a request of the `src` value should be “MapML” content, identified over the network by the `text/mapml` media type.  MapML is intended to be part of the HTML vocabulary and to be parsed with the (almost) unmodified HTML parser.  To achieve that, some elements in the [MapML specification](https://maps4html.org/MapML/spec/) rely on and extend the definitions of elements of the same name in HTML. The second rendering path for `<layer>` is to include “MapML” content inline in light DOM. 
 
 It’s great that we can imagine a way to extend HTML to include dynamic Web maps using almost-existing browser code infrastructure, but where will layer content as envisioned come from?  Without content, new browser code would not be useful.  What’s needed is a way to get the vast amount of existing content from services that have [well-defined standard and not-so-standard interfaces](https://www.geoseer.net/), into the new HTML-MapML format available at simple URLs, without requiring significant change to the content, but especially without requiring browsers to ‘understand’ interfaces other than the uniform interface of HTTP.  This might seem like a tall order, but a key design constraint followed by HTML-MapML is that the vocabulary itself should represent abstractions that ‘fit’ the existing content, so that if the services by which the content is accessed today were to provide HTML-MapML as a serialization format, then such content would be rendered inherently compatible with browsers, even before script execution.  Such experimentation has formed the basis of significant experimentation by several participants through the [OGC Testbed program](https://www.youtube.com/playlist?list=PLQsQNjNIDU85HBDZWc8aE7EvQKE5nIedK), and has proven to be readily possible in practice, through the creation of [server shims](https://docs.geoserver.org/latest/en/user/community/mapml/index.html).  We anticipate that should the Web community agree to work with the mapping community on this proposal, that we will have success in persuading the public spatial data infrastructures around the world to be made available to the browser in HTML-MapML.
 
-<h3 id="the-extent-element">The <a href="https://maps4html.org/MapML/spec/#the-extent-element"><code>&lt;extent&gt;</code></a> element</h4>
+<h3 id="the-text-mapml-mime-type">The <code>text/mapml</code> MIME type</h3>
+
+In order to allow HTML authors to make use of existing cartographic services on the Web, such as Web Map Services (WMS) and Web Map Tile Services (WMTS) we propose to create a new document and associated MIME type, `text/mapml`, which can be used by HTML authors and map services to support the key use case of publishing a Web map, with about the same authoring complexity as that of publishing a `<video>`, a `<audio>` or an `<img>`, that is, by using the `<layer src="https://example.org/map/document/url/"></layer>` [formulation](high-level-api.md#bookmark1). 
+
+The proposed doctype for such a map document is  `<!doctype mapml>`, which signals to the HTML parser that it is parsing a MapML document. The root element of a MapML document is `<mapml>`. Like HTML, a MapML document has a `<head>` element, for map document metadata, and a `<body>` for map content.  The content of the document is MapML, that is, the elements from this proposal, which are rendered via coordinates in the coordinate system designated by the `<map>` (`projection` attribute).
+
+<h3 id="map-markup-elements">Map markup elements</h3>
+
+<h4 id="the-extent-element">The <a href="https://maps4html.org/MapML/spec/#the-extent-element"><code>&lt;extent&gt;</code></a> element</h4>
 
 
 Web maps’ content is, typically, but not exclusively,  provided by content servers associated with server-side Geographic Information Systems and their APIs.  These APIs often share common semantics associated to maps and map features, although typically with differing terminology between services. In order to access the widest variety of map services as possible, we created the  `<extent>` element, which can be a child of the `<layer>` element:
@@ -53,7 +66,7 @@ Web maps’ content is, typically, but not exclusively,  provided by content ser
 
 In order to decouple the client HTML vocabulary from server vocabularies, we use the pattern in HTML established by the `<form>` and `<input>` elements, which is a way to template the URL (in `<form>`s the URL is contained in the `<form action="">` attribute) to which the form submission occurs.  The `<extent>` element for map layers acts in a similar role to `<form>` in this decoupling, except that it establishes a two-dimensional rectangular context for server submissions, linked to the corresponding dimensions of the ancestor `<map>` element.  The `<extent>` submission events are generated automatically by the user events (pan or zoom) or user-agent actions (map resize).
 
-<h3 id="the-link-rel=tile-or-image-tref-element">The <code>rel</code> and <code>tref</code> attributes</h4>
+<h4 id="the-link-rel=tile-or-image-tref-element">The <code>rel</code> and <code>tref</code> attributes</h4>
 
 
 In HTML, the `<form>` element has the `action` attribute, whose value is a URL to which the form’s submission is directed, once action processing is completed.  We experimented with an `action` attribute on the `<extent>` element ([Issue #61](https://github.com/Maps4HTML/MapML/issues/61)), but we found it to be not as effective a mechanism for Web maps, for several reasons, including the fact that map services don’t always use URL query parameters, they sometimes also use URL path segments to identify server resources. So we followed the cow path established by the Leaflet and OpenLayers open source Web mapping libraries and added a proposal to extend the `<link>` element with map-specific link `rel` values, plus the `tref` attribute which contains a URL template.  
@@ -70,12 +83,12 @@ The processing model is similar, and related to that of `<form action="">`, in t
 
 The reason for specifying this as an extension of the `<link>` element is because there can be more than a single template processed within such an extent, retrieving image or document resources for each, and rendering the result in document order, for example, geometries and labels for a single “layer” may be rendered via different resource templates / links ([example](https://geogratis.gc.ca/mapml/en/osmtile/cbmt/)).
 
-<h3 id="the-input-element">The <a href="https://maps4html.org/MapML/spec/#the-input-element"><code>&lt;input&gt;</code></a> element</h4>
+<h4 id="the-input-element">The <a href="https://maps4html.org/MapML/spec/#the-input-element"><code>&lt;input&gt;</code></a> element</h4>
 
 
 There are four proposed types of input in MapML: `location`, `zoom`, `width` and `height`. Like inputs in HTML, each input has a `name` attribute which specifies the name of the variable to be set by the input.  This is the core mechanism whereby URLs processed by the browser are decoupled (or indirectly coupled, at least) from the services they are used to access; a server URL may be composed of names, the meanings of which are known to the service or domain, but which are meaningless to the browser. In this way, the client and service are directly coupled to the MapML specification, but decoupled from each other.
 
-<h4 id="the-input-type-location-state">The <code>type="location"</code> state</h5>
+<h5 id="the-input-type-location-state">The <code>type="location"</code> state</h5>
 
 
 Locations are specified in coordinates of one of the coordinate systems associated to the root “projection”, also known as a Tiled Coordinate Reference System, which is a term defined by MapML in order to unify concepts and vocabulary required for enabling maps in HTML. The location input has several attributes which authors specify to control the serialization of the location.  However, the coordinate systems of the Tiled Coordinate Reference Systems defined by MapML are widely understood even outside MapML; MapML mostly standardizes the terminology around those coordinate systems, especially the names,  into the specification for the purpose of using that terminology in the input attributes.  
@@ -118,7 +131,7 @@ Location events generated by an extent can be located at a relative position of 
 
 The `<input type="location">`’s `min` and `max` attributes should be used together.  They are a way for the server to describe axis bounds that can be respected by the client.  When the client generates an event that results in a value for the input that is outside the established range (because the map is viewing a scene outside the range for this particular layer), no request will be made to URLs that require the variable to have a value.  In this way, the server can avoid needless traffic to itself by transmitting min/max on inputs for zoom and location axes.
 
-<h4 id="the-input-type-zoom-state">The <code>type="zoom"</code> state</h5>
+<h5 id="the-input-type-zoom-state">The <code>type="zoom"</code> state</h5>
 
 <h6 id="the-input-type-zoom-min-max-and-value-attributes">The <code>min</code>, <code>max</code> and <code>value</code> attributes</h6>
 
@@ -142,7 +155,7 @@ In the following example, the zoom value is set at 17.  This means for example, 
 
 For server-friendliness, it’s important for the author to establish the axis (and zoom)  bounds on a per-`<link>` template basis.  For example, there may be more than a single tile link template in an `<extent>`, with `<input>`s established to supply variable values to each one’s link template.  The reason might be to define a composite layer from different server image tile pyramids, for example.  One of the tile pyramids might not share the entire set of zoom levels with the other, nor indeed cover the same geographic extent (bounding box).  For this reason, separate zoom and axis bounds should be established by setting up different `<input>` variables to supply the different URL (`<link>`) templates, and thus generate only valid (200 OK) URLs.
 
-<h3 id="the-tile-element">The <a href="https://maps4html.org/MapML/spec/#the-tile-element"><code>&lt;tile&gt;</code></a> element</h4>
+<h4 id="the-tile-element">The <a href="https://maps4html.org/MapML/spec/#the-tile-element"><code>&lt;tile&gt;</code></a> element</h4>
 
 
 The `<tile>` element doesn’t get used too much in practice.  Early on, we defined the `<extent action>` attribute, which made `<extent>` quite `<form>`-like, and which required that the server returned a MapML document with individual `<tile>` elements for each tile.  This meant that each zoom or pan (or resize), would require the server to generate and send a new MapML document, which would then be parsed and rendered by the client.  While functional, it turned out to be “chatty”, and unnecessary. ([Issue #61](https://github.com/Maps4HTML/MapML/issues/61))
@@ -151,7 +164,7 @@ Although the polyfill behaviour has not yet been thoroughly established through 
 
 The `<tile>` element can also be used to serve static MapML content, for example to serve a directory of tiled images that have been statically generated.   An intelligent map client could cache these behind the scenes, and so provide better, perhaps even offline, performance for a map layer.
 
-<h3 id="the-feature-element">The <a href="https://maps4html.org/MapML/spec/#the-feature-element"><code>&lt;feature&gt;</code></a> element</h4>
+<h4 id="the-feature-element">The <a href="https://maps4html.org/MapML/spec/#the-feature-element"><code>&lt;feature&gt;</code></a> element</h4>
 
 
 The `<feature>` element’s design mirrors what Web map developers actually do with vector information, which is commonly encoded in JSON as ‘[GeoJSON](https://tools.ietf.org/html/rfc7946)’.  The feature element has a `<properties>` child element, which is intended for human-readable HTML markup, rendered in its own browsing context such as a popup or pullout, and a `<geometry>` child element for the map-displayable feature content.  The need for a new `<geometry>` element is driven by the need to style and embed links in content, described below.
@@ -197,7 +210,7 @@ The types of vector geometries for which there are proposed elements are:
 
 `<point>`, `<linestring>`, `<polygon>`, `<multipoint>`, `<multilinestring>`, `<multipolygon>` and `<geometrycollection>`.  These types reflect the semantics of their counterparts in GeoJSON and most or all standards-based Geographic Information System vector formats.
 
-<h3 id="tiled-vector-features">Tiled vector features</h4>
+<h3 id="tiled-vector-features">Tiled vector features</h3>
 
 
 The selectability of features’ vector parts is useful in allowing servers to serve tiled or otherwise partitioned feature data without (necessarily) introducing visual or semantic ‘noise’.  The objective of doing so is often (but not exclusively) related to optimizing or minimizing bandwidth consumption; whereas tiled images can consume a lot of bandwidth, relatively (and depending on what content is being represented), tiled vector information can conserve bandwidth while conveying feature semantics both visually and through markup. In the screen capture below, tiled vector features (support simulated with SVG + CSS + JavaScript) are selected and styled in solid (random) colors and outlined in blue. They are displayed with no CSS rule to selectively style or hide ‘artificial’ vector segments introduced by tile boundaries.
