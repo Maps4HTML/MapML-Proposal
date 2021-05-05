@@ -82,7 +82,7 @@ The proposed extension would create a standard `<map>` widget that contains cont
 
 ```HTML
 <map zoom="11" lat="48.8566" lon="2.3522" controls controlslist="nolayer noreload">
-  <layer label="Paris" src="https://example.com/mapml/osm/" checked crossorigin></layer>
+  <layer src="https://example.com/mapml/osm/" checked crossorigin></layer>
 </map>
 ```
 <p><img src="images/map-example-paris.png" width="300" height="150" alt="Map of Paris"></p>
