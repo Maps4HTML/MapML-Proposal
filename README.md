@@ -29,7 +29,6 @@ The goal of this proposal is to bridge the gap between the two communities in a 
 - [The Proposal](#the-proposal)
 - [Goals](#goals)
 - [Non-Goals](#non-goals)
-- [Alternative Approaches](#alternative-approaches)
 - [A High-Level API](#a-high-level-api)
 - [Key Scenarios](#key-scenarios)
   - [Tiled Coordinate Reference Systems](#tiled-coordinate-reference-systems)
@@ -39,6 +38,7 @@ The goal of this proposal is to bridge the gap between the two communities in a 
 - [Detailed design discussion](#detailed-design-discussion)
   - [Use Cases and Requirements](#use-cases-and-requirements)
 - [Considered Alternative Designs of MapML](#considered-alternative-designs-of-mapml)
+- [Alternative Approaches](#alternative-approaches)
 - [Stakeholder Feedback / Opposition](#stakeholder-feedback--opposition)
 - [References and Acknowledgements](#references-and-acknowledgements)
 
@@ -77,17 +77,7 @@ In improving the choices among mapping services available through the Web platfo
 
 *   Interoperability with the operating model or availability of existing spatial (map) content management systems, APIs and Web Services. For example, the evolving <a href="https://ogcapi.ogc.org/"><abbr title="Open Geospatial Consortium">OGC</abbr> API</a> standards.
 
-<h3 id="alternative-approaches">Alternative Approaches</h3>
-
-
-
-
-*   [SVGMap](https://discourse.wicg.io/t/vector-tiling-on-svgmap/3135) - is it possible to merge the SVGMap proposal and this proposal? Or are they competing proposals?
-*   APIs: [Leaflet](https://leafletjs.com/), [OpenLayers](https://openlayers.org/) and others, (albeit others without any notion of cross-origin resource sharing) provide excellent map scripting APIs and events.  Can these or similar APIs be built on top of the proposed HTML infrastructure? Would life be simpler for authors with the proposed HTML?
-*   Status quo
-
 <h3 id="a-high-level-api">A High-Level API</h3>
-
 
 The <a href="https://extensiblewebmanifesto.org/">Extensible Web Manifesto</a> calls for iterative development and evolution of platform features, starting with low-level ‘primitives’ and resulting eventually in high-level features.  Although there are several low-level primitive proposals inherent or implicated in this proposal, overall this can be seen as a proposal for a high-level feature.  That feature is declarative dynamic Web maps in HTML.  Web mapping is a mature category of JavaScript library that is well into the stage of its development life cycle that some of the aggregate characteristics of those libraries should be incorporated into the platform.  As such, this proposal captures some of the ‘cow paths’ of open and closed source JavaScript Web mapping libraries, as well as taking into consideration how to incorporate server-side mapping services and APIs.
 
@@ -256,6 +246,12 @@ for how MapML compares in capabilities in contrast to existing popular web mappi
 
 
 TBD - we have considered many alternatives, I have just run out of steam to document them, at the moment. Also this document is already quite long.  As things progress, I will add content here.
+
+<h3 id="alternative-approaches">Alternative Approaches</h3>
+
+*   [SVGMap](https://discourse.wicg.io/t/vector-tiling-on-svgmap/3135) - is it possible to merge the SVGMap proposal and this proposal? Or are they competing proposals?
+*   APIs: [Leaflet](https://leafletjs.com/), [OpenLayers](https://openlayers.org/) and others, (albeit others without any notion of cross-origin resource sharing) provide excellent map scripting APIs and events.  Can these or similar APIs be built on top of the proposed HTML infrastructure? Would life be simpler for authors with the proposed HTML?
+*   Status quo
 
 <h2 id="stakeholder-feedback-opposition">Stakeholder Feedback / Opposition</h2>
 
