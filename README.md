@@ -78,7 +78,14 @@ In improving the choices among mapping services available through the Web platfo
 
 The <a href="https://extensiblewebmanifesto.org/">Extensible Web Manifesto</a> calls for iterative development and evolution of platform features, starting with low-level ‘primitives’ and resulting eventually in high-level features.  Although there are several low-level primitive proposals inherent or implicated in this proposal, overall this can be seen as a proposal for a high-level feature.  That feature is declarative dynamic Web maps in HTML.  Web mapping is a mature category of JavaScript library that is well into the stage of its development life cycle that some of the aggregate characteristics of those libraries should be incorporated into the platform.  As such, this proposal captures some of the ‘cow paths’ of open and closed source JavaScript Web mapping libraries, as well as taking into consideration how to incorporate server-side mapping services and APIs.
 
-The proposed extension would create a standard [`<map>`](high-level-api.md#the-map-element) widget that contains controls in a user agent shadow root, (similar to `<video>` today), with child [`<layer>`](high-level-api.md#the-layer-element) elements which are in, and may contain, light DOM map-related markup, the vocabulary of which is also part of this proposal.
+The proposed extension would create a standard `<map>` widget that contains controls in a user agent shadow root, (similar to `<video>` today), with child `<layer>` elements which are in, and may contain, light DOM map-related markup (the vocabulary of which is also part of this proposal):
+
+```HTML
+  <map zoom="11" lat="48.8566" lon="2.3522" controls controlslist="nolayer noreload">
+    <layer label="Paris" src="https://example.com/mapml/osm/" checked crossorigin></layer>
+  </map>
+```
+<p><img src="images/map-example-paris.png" width="300" height="150" alt="Map of Paris"></p>
 
 *See the [High-Level API explainer](high-level-api.md) for details on the proposed elements that may be referred to in this proposal.*
 
