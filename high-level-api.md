@@ -2,7 +2,7 @@
 
 This is the explainer for the High-Level API of the [MapML Proposal](README.md).
 
-<h2>Table Of Contents</h2>
+<h2>Contents</h2>
 
 - [The `<map>` element](#the-map-element)
 - [The `<layer>` element](#the-layer-element)

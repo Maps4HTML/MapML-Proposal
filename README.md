@@ -23,7 +23,7 @@ Web maps are a well-established domain of Web design, and there exist popular, m
 
 The goal of this proposal is to bridge the gap between the two communities in a way that may have positive benefits for both sides. On the one hand, the Web mapping community is burdened by intermediaries and the consequent barriers to widespread creation and use of maps and public map information. On the other hand, the Web platform, especially the mobile Web, needs more and better high-level features and less JavaScript. Simple yet extensible Web maps in HTML, that equally leverage the other platform standards, is the feature that both communities need to come together to improve usability and accessibility for users.
 
-<h2>Table Of Contents</h2>
+<h2>Contents</h2>
 
 - [The Problem](#the-problem)
 - [The Proposal](#the-proposal)
@@ -85,10 +85,10 @@ The proposed extension would create a standard [`<map>`](high-level-api.md#the-m
 
 *See the [Key Scenarios explainer](high-level-api.md) detailing:*
 
-- [Tiled Coordinate Reference Systems](key-scenarios.md#tiled-coordinate-reference-systems)
-- [Linking](key-scenarios.md#linking)
-- [Graceful Degradation and Progressive Enhancement](key-scenarios.md#graceful-degradation-and-progressive-enhancement)
-- [Polyfill](key-scenarios.md#polyfill)
+- Tiled Coordinate Reference Systems
+- Linking
+- Graceful Degradation and Progressive Enhancement
+- Polyfill
 
 <h2 id="detailed-design-discussion">Detailed design discussion</h2>
 
