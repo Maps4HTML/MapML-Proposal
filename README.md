@@ -1,5 +1,6 @@
 <h1>The MapML (Map Markup Language) explainer</h1>
 
+Specification: https://maps4html.org/MapML/spec/
 
 <h2>Author</h2>
 
