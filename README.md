@@ -81,9 +81,9 @@ The <a href="https://extensiblewebmanifesto.org/">Extensible Web Manifesto</a> c
 The proposed extension would create a standard `<map>` widget that contains controls in a user agent shadow root, (similar to `<video>` today), with child `<layer>` elements which are in, and may contain, light DOM map-related markup (the vocabulary of which is also part of this proposal):
 
 ```HTML
-  <map zoom="11" lat="48.8566" lon="2.3522" controls controlslist="nolayer noreload">
-    <layer label="Paris" src="https://example.com/mapml/osm/" checked crossorigin></layer>
-  </map>
+<map zoom="11" lat="48.8566" lon="2.3522" controls controlslist="nolayer noreload">
+  <layer label="Paris" src="https://example.com/mapml/osm/" checked crossorigin></layer>
+</map>
 ```
 <p><img src="images/map-example-paris.png" width="300" height="150" alt="Map of Paris"></p>
 
