@@ -92,7 +92,7 @@ The proposed extension would create a standard `<map>` widget that contains cont
 
 <h2 id="key-scenarios">Key Scenarios</h2>
 
-*See the [Key Scenarios explainer](high-level-api.md) detailing:*
+*See the [Key Scenarios explainer](key-scenarios.md) detailing:*
 
 - Tiled Coordinate Reference Systems
 - Linking
