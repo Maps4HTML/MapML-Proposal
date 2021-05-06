@@ -10,7 +10,15 @@ Peter Rushforth
 <h2>Participate</h2>
 
 
-The W3C [Maps for HTML Community Group](https://www.w3.org/community/maps4html/) is iterating on the problem space.  You can contribute to the on-going discussion and documentation of [Use Cases and Requirements for Web mapping](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/). Alternatively, if your organization is a member of the [Web Platform Incubator Community Group](https://www.w3.org/community/WICG/) (WICG) and you are able to contribute there but not elsewhere, please consider contributing through the [WICG forum on Web mapping](https://discourse.wicg.io/c/web-mapping/22).  We would love to hear from you. 
+The W3C [Maps for HTML Community Group](https://www.w3.org/community/maps4html/)
+is iterating on the problem space.
+You can contribute to the on-going discussion and documentation of
+[Use Cases and Requirements for Standardizing Web Maps](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/).
+Alternatively, if your organization is a member of the
+[Web Platform Incubator Community Group](https://www.w3.org/community/WICG/) (WICG)
+and you are able to contribute there but not elsewhere,
+please consider contributing through the [WICG forum on Web mapping](https://discourse.wicg.io/c/web-mapping/22).
+We would love to hear from you. 
 
 [Issue tracker for this explainer](https://github.com/Maps4HTML/MapML-Proposal/issues)
 
