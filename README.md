@@ -34,6 +34,7 @@ The goal of this proposal is to bridge the gap between the two communities in a 
 - [Key Scenarios](#key-scenarios)
 - [Detailed design discussion](#detailed-design-discussion)
   - [Use Cases and Requirements](#use-cases-and-requirements)
+  - [W3C/OGC Joint Workshop on Maps for the Web](#w3c-ogc-joint-workshop-on-maps-for-the-web)
 - [Considered Alternative Designs of MapML](#considered-alternative-designs-of-mapml)
 - [Alternative Approaches](#alternative-approaches)
 - [Stakeholder Feedback / Opposition](#stakeholder-feedback--opposition)
@@ -108,6 +109,14 @@ to identify gaps between the required functionality and the polyfilled behaviour
 
 See the [MapML Use Case, Requirement, and Capability Matrix](https://maps4html.org/UCR-MapML-Matrix/mapml-ucrs-fulfillment-matrix.html)
 for how MapML compares in capabilities in contrast to existing popular web mapping libraries.
+
+<h3 id="w3c-ogc-joint-workshop-on-maps-for-the-web">W3C/OGC Joint Workshop on Maps for the Web</h3>
+
+Natural Resources Canada hosted the 2020
+[W3C/OGC Joint Workshop Series on Maps for the Web](https://www.w3.org/2020/maps/)
+in cooperation with the Maps for HTML Community Group.
+
+See the [Report on the Joint W3C-OGC Workshop on Maps for the Web](https://www.w3.org/2020/maps/report).
 
 <h2 id="considered-alternative-designs-of-mapml">Considered alternative designs of MapML</h2>
 
