@@ -89,7 +89,7 @@ Geographic Information Systems allow us to provide the same data in a variety of
 </mapml>
 ```
 
-`alternate` [link relations](https://html.spec.whatwg.org/multipage/links.html#linkTypes) are used to provide alternate representations by format and other criteria.  In this case, the `projection` attribute is used by the UA to distinguish the links within the link group identified by the `alternate` link relation.
+`alternate` link relations are used to provide alternate representations by format and other criteria.  In this case, the `projection` attribute is used by the UA to distinguish the links within the link group identified by the `alternate` link relation.
 
 <h3 id="links-between-map-services">Links between map services</h3>
 
