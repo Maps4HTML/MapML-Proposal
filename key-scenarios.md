@@ -17,7 +17,7 @@ Key scenarios of the [MapML Proposal](README.md).
 
 <h2 id="tiled-coordinate-reference-systems">Tiled Coordinate Reference Systems</h2>
 
-Perhaps the most important characteristic of Web maps that is essential for standardization, is the definition of the coordinate reference systems and the scale of the display. 
+Perhaps the most important characteristic of Web maps that is essential for standardization, is the definition of the [coordinate reference systems](https://en.wikipedia.org/wiki/Spatial_reference_system) and the scale of the display. 
 
 ![Tiled coordinate reference systems](images/tiled-coordinate-reference-systems.png "Tiled coordinate reference systems")
 
