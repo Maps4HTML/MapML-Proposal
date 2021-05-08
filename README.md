@@ -65,7 +65,7 @@ In improving the choices among mapping services available through the Web platfo
 *   Define and embed accessibility of map feature and location information into HTML for use by screen readers and other assistive technology.
 *   Define and design security of map information considerations into the Web platform.
 *   Define the markup to create mapping mashups that doesn’t necessarily require scripting or detailed mapping server technology knowledge i.e. that can be accomplished about as easily as linking to a document.
-*   Simplify the use of public spatial data infrastructures (SDI), such as OpenStreetMap and national and international SDIs, by designing the integration of those services into the proposed Web platform mapping standards.
+*   Simplify the use of public [spatial data infrastructures](https://en.wikipedia.org/wiki/Spatial_data_infrastructure) (SDI), such as [OpenStreetMap](https://wiki.openstreetmap.org/wiki/Main_Page) and national and international SDIs, by designing the integration of those services into the proposed Web platform mapping standards.
 *   Defining and (advocate for) adding map-enabled HTML to the serialization formats available from existing spatial (map) content management systems, APIs and Web Services.
 
 <h3 id="non-goals">Non-goals</h3>
