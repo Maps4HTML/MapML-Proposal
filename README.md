@@ -60,8 +60,11 @@ platform.
 - Define the markup to create mapping mashups that doesn’t necessarily require
 scripting or detailed mapping server technology knowledge
 i.e. that can be accomplished about as easily as linking to a document.
-- Simplify the use of public spatial data infrastructures (SDI),
-such as OpenStreetMap and national and international SDIs,
+- Simplify the use of public
+[spatial data infrastructures](https://en.wikipedia.org/wiki/Spatial_data_infrastructure)
+(SDI), such as
+[OpenStreetMap](https://wiki.openstreetmap.org/wiki/Main_Page)
+and national and international SDIs,
 by designing the integration of those services into the proposed Web platform
 mapping standards.
 - Defining and (advocate for) adding map-enabled HTML to the serialization
@@ -93,7 +96,7 @@ The proposed extension would create a standard `<map>` widget that contains cont
 
 <h3 id="key-scenarios">Key Scenarios</h3>
 
-*See the [Key Scenarios explainer](high-level-api.md) detailing:*
+*See the [Key Scenarios explainer](key-scenarios.md) detailing:*
 
 - Tiled Coordinate Reference Systems
 - Linking
