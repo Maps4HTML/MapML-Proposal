@@ -8,7 +8,15 @@ Peter Rushforth
 
 <h2>Participate</h2>
 
-The W3C [Maps for HTML Community Group](https://www.w3.org/community/maps4html/) is iterating on the problem space.  You can contribute to the on-going discussion and documentation of [Use Cases and Requirements for Web mapping](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/). Alternatively, if your organization is a member of the [Web Platform Incubator Community Group](https://www.w3.org/community/WICG/) (WICG) and you are able to contribute there but not elsewhere, please consider contributing through the [WICG forum on Web mapping](https://discourse.wicg.io/c/web-mapping/22).  We would love to hear from you. 
+The W3C [Maps for HTML Community Group](https://www.w3.org/community/maps4html/)
+is iterating on the problem space.
+You can contribute to the on-going discussion and documentation of
+[Use Cases and Requirements for Standardizing Web Maps](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/).
+Alternatively, if your organization is a member of the
+[Web Platform Incubator Community Group](https://www.w3.org/community/WICG/) (WICG)
+and you are able to contribute there but not elsewhere,
+please consider contributing through the [WICG forum on Web mapping](https://discourse.wicg.io/c/web-mapping/22).
+We would love to hear from you.
 
 [Issue tracker for this explainer](https://github.com/Maps4HTML/MapML-Proposal/issues)
 
@@ -111,7 +119,7 @@ This proposal is being [evaluated](https://github.com/Maps4HTML/MapML/labels/Req
 against the [Use Cases and Requirements for Standardizing Web Maps](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/),
 to identify gaps between the required functionality and the polyfilled behaviour.
 
-See the [MapML Use Case, Requirement, and Capability Matrix](https://maps4html.org/UCR-MapML-Matrix/mapml-ucrs-fulfillment-matrix.html)
+See the [MapML UCR Fullfillment Matrix](https://maps4html.org/UCR-MapML-Matrix/mapml-ucrs-fulfillment-matrix.html)
 for how MapML compares in capabilities in contrast to existing popular web mapping libraries.
 
 <h3 id="w3c-ogc-joint-workshop-on-maps-for-the-web">W3C/OGC Joint Workshop on Maps for the Web</h3>
