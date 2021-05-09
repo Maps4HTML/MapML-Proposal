@@ -2,6 +2,8 @@
 
 Key scenarios of the [MapML Proposal](README.md).
 
+This is a list of scenarios which we hope MapML will solve.
+
 <h2>Contents</h2>
 
 - [Tiled Coordinate Reference Systems](key-scenarios.md#tiled-coordinate-reference-systems)
