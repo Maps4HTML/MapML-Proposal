@@ -108,7 +108,6 @@ The proposed extension would create a standard `<map>` widget that contains cont
 
 - Tiled Coordinate Reference Systems
 - Linking
-- Graceful Degradation and Progressive Enhancement
 
 <h2 id="detailed-design-discussion">Detailed design discussion</h2>
 

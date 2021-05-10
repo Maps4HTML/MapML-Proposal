@@ -14,6 +14,7 @@ This is the explainer for the High-Level API of the [MapML Proposal](README.md).
   - [The `<tile>` element](#the-tile-element)
   - [The `<feature>` element](#the-feature-element)
 - [Tiled vector features](#tiled-vector-features)
+- [Graceful Degradation and Progressive Enhancement](#graceful-degradation-and-progressive-enhancement)
 - [Polyfill](#polyfill)
 
 <h2 id="web-mapping-elements">Web mapping elements</h2>
@@ -207,6 +208,12 @@ span.noline { display: none; }
 ![Tiled vector data, tiles hidden](images/vector-tiles-hidden.png "image_tooltip")
 
 A [video demo of this feature](https://www.youtube.com/watch?v=ctGrhFgAONE) is available on YouTube.
+
+<h2 id="graceful-degradation-and-progressive-enhancement">Graceful Degradation and Progressive Enhancement</h2>
+
+There are many older browsers still in use on the Web, and they will likely be in use for many years to come, for a variety of reasons.  Fortunately, “client-side image maps” were very popular on the Web at one stage, and this functionality is well supported by older browsers.  For HTML authors who wish to provide a Web mapping experience for users of these older browsers, it should be possible to provide “fallback” markup that enables the core map experience they wish users to have, while providing a progressively enhanced experience for users of evergreen browsers, without relying on archaic scripting APIs.
+
+If `<area>` elements are present (for fallback) as child elements of `<map>`, they are (progressively, if the conditions warrant) treated as `<layer>` elements containing a single geographic feature, with coordinates in the `coords` attribute being interpreted as being valid pixel coordinates in the map’s locally defined map coordinate system.   More detail and a working example of [how graceful degradation and progressive enhancement could work](https://maps4html.org/Web-Map-Custom-Element/blog/progressive-web-maps.html) in this proposal is available.
 
 <h2 id="polyfill">Polyfill</h2>
 
