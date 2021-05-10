@@ -14,6 +14,7 @@ This is the explainer for the High-Level API of the [MapML Proposal](README.md).
   - [The `<tile>` element](#the-tile-element)
   - [The `<feature>` element](#the-feature-element)
 - [Tiled vector features](#tiled-vector-features)
+- [Polyfill](#polyfill)
 
 <h2 id="web-mapping-elements">Web mapping elements</h2>
 
@@ -206,3 +207,12 @@ span.noline { display: none; }
 ![Tiled vector data, tiles hidden](images/vector-tiles-hidden.png "image_tooltip")
 
 A [video demo of this feature](https://www.youtube.com/watch?v=ctGrhFgAONE) is available on YouTube.
+
+<h2 id="polyfill">Polyfill</h2>
+
+A polyfill for the High-Level API is available.
+
+- A [custom `<map>` element prototype](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-web-map.html) is available with some caveats; it’s not yet a fully compliant ‘polyfill’. The prototype [doesn’t work in WebKit](https://caniuse.com/#feat=mdn-api_customelementregistry_builtin) due to the use of unsupported custom built-in elements. And unfortunately, `<map>` _as a built-in custom element_ has a [major accessibility issue](https://github.com/w3c/html-aam/issues/292) due to the nature of current implementations in some browsers.
+- A parallel [`<mapml-viewer>`](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-mapml-viewer.html) autonomous custom element suite is available in all major browsers. A [demo](https://geogratis.gc.ca/mapml/) is available.
+
+The light DOM content of `<layer>` is not currently active or available as an API.
