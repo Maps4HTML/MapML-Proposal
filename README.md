@@ -100,7 +100,7 @@ The proposed extension would create a standard `<map>` widget that contains cont
 ```
 <p><img src="images/map-example-paris.png" width="300" height="150" alt="Map of Paris"></p>
 
-*See the [High-Level API explainer](high-level-api.md) for details on the proposed elements that may be referred to in this proposal.*
+*See the [High-Level API explainer](high-level-api.md) for details on the proposed elements and polyfill.*
 
 <h3 id="key-scenarios">Key Scenarios</h3>
 
@@ -108,8 +108,6 @@ The proposed extension would create a standard `<map>` widget that contains cont
 
 - Tiled Coordinate Reference Systems
 - Linking
-- Graceful Degradation and Progressive Enhancement
-- Polyfill
 
 <h2 id="detailed-design-discussion">Detailed design discussion</h2>
 

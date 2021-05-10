@@ -14,8 +14,6 @@ This is a list of scenarios which we hope MapML will solve.
   - [Links for alternate layer coordinate systems (projections)](#links-for-alternate-layer-coordinate-systems-projections)
   - [Links between map services](#links-between-map-services)
   - [Links between locations](#links-between-locations)
-- [Graceful Degradation and Progressive Enhancement](key-scenarios.md#graceful-degradation-and-progressive-enhancement)
-- [Polyfill](key-scenarios.md#polyfill)
 
 <h2 id="tiled-coordinate-reference-systems">Tiled Coordinate Reference Systems</h2>
 
@@ -114,18 +112,3 @@ Like `<span>` elements, `<a>` elements could appear within the `<coordinates>` e
 <h3 id="links-between-locations">Links between locations</h3>
 
 Links between locations could be marked up similarly to [links between services](#links-between-map-services), possibly with the addition of attributes indicating the location and zoom of the link destination. The current location of a map could be modified by activating links from one location to another.  There might need to be a different visual / accessible cue for such links.  By default, the map might animate in a “fly to” manner in response to link activation.
-
-<h2 id="graceful-degradation-and-progressive-enhancement">Graceful Degradation and Progressive Enhancement</h2>
-
-There are many older browsers still in use on the Web, and they will likely be in use for many years to come, for a variety of reasons.  Fortunately, “client-side image maps” were very popular on the Web at one stage, and this functionality is well supported by older browsers.  For HTML authors who wish to provide a Web mapping experience for users of these older browsers, it should be possible to provide “fallback” markup that enables the core map experience they wish users to have, while providing a progressively enhanced experience for users of evergreen browsers, without relying on archaic scripting APIs.
-
-If `<area>` elements are present (for fallback) as child elements of `<map>`, they are (progressively, if the conditions warrant) treated as `<layer>` elements containing a single geographic feature, with coordinates in the `coords` attribute being interpreted as being valid pixel coordinates in the map’s locally defined map coordinate system.   More detail and a working example of [how graceful degradation and progressive enhancement could work](https://maps4html.org/Web-Map-Custom-Element/blog/progressive-web-maps.html) in this proposal is available.
-
-<h2 id="polyfill">Polyfill</h2>
-
-A polyfill for the [High-Level API](high-level-api.md) is available.
-
-- A [custom `<map>` element prototype](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-web-map.html) is available with some caveats; it’s not yet a fully compliant ‘polyfill’. The prototype [doesn’t work in WebKit](https://caniuse.com/#feat=mdn-api_customelementregistry_builtin) due to the use of unsupported custom built-in elements. And unfortunately, `<map>` _as a built-in custom element_ has a [major accessibility issue](https://github.com/w3c/html-aam/issues/292) due to the nature of current implementations in some browsers.
-- A parallel [`<mapml-viewer>`](https://github.com/Maps4HTML/Web-Map-Custom-Element/blob/master/index-mapml-viewer.html) autonomous custom element suite is available in all major browsers. A [demo](https://geogratis.gc.ca/mapml/) is available.
-
-The light DOM content of `<layer>` is not currently active or available as an API.
