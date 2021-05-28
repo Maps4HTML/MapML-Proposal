@@ -148,7 +148,7 @@ The objective of this project is to get Web browser projects to agree that Web m
 
 Contributions, advice and support from the following people are gratefully acknowledged:
 
-Benoît Chagnon, Brian Kardell, Michael<sup>tm</sup> Smith, Robert Linder, Joan Masó, Keith Pomakis, Gil Heo, Jérôme St-Louis,  Amelia Bellamy-Royds, Nic Chan, Nick Fitzsimmons, Simon Pieters, Tom Kralidis, Daniel Morissette, Chris Hodgson
+Benoît Chagnon, Brian Kardell, Michael<sup>tm</sup> Smith, Robert Linder, Joan Masó, Keith Pomakis, Gil Heo, Jérôme St-Louis,  Amelia Bellamy-Royds, Nic Chan, Nick Fitzsimmons, Simon Pieters, Tom Kralidis, Daniel Morissette, Chris Hodgson, Ahmad Yama Ayubi, Bennett Feely, Doug Schepers
 
 If I’ve forgotten to mention you, please open an issue.
 
