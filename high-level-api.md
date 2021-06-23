@@ -219,7 +219,10 @@ If `<area>` elements are present (for fallback) as child elements of `<map>`, th
 
 A polyfill for the High-Level API is available.
 
-- A [custom `<map>` element prototype](https://maps4html.org/web-map-doc/docs/maps/web-map) is available with some caveats; it’s not yet a fully compliant ‘polyfill’. The prototype [doesn’t work in WebKit](https://caniuse.com/#feat=mdn-api_customelementregistry_builtin) due to the use of unsupported custom built-in elements. And unfortunately, `<map>` _as a built-in custom element_ has a [major accessibility issue](https://github.com/w3c/html-aam/issues/292) due to the nature of current implementations in some browsers.
+- A [custom `<map>` element prototype](https://maps4html.org/web-map-doc/docs/maps/web-map) is available with some caveats:
+  - It’s not yet a fully compliant ‘polyfill’;
+  - The prototype [doesn’t work in WebKit](https://caniuse.com/#feat=mdn-api_customelementregistry_builtin) due to the use of unsupported custom built-in elements;
+  - `<map>` _as a built-in custom element_ has a [major accessibility issue](https://github.com/w3c/html-aam/issues/292) due to [Chromium incorrectly treating non-`<area>` elements as ignored](https://bugs.chromium.org/p/chromium/issues/detail?id=1208405) within map elements.
 - A parallel [`<mapml-viewer>`](https://maps4html.org/web-map-doc/docs/maps/mapml-viewer) autonomous custom element suite is available in all major browsers. A [demo](https://geogratis.gc.ca/mapml/) and [documentation](https://maps4html.org/web-map-doc/) is available.
 
 The light DOM content of `<layer>` is not currently active or available as an API.
