@@ -31,7 +31,7 @@ The goal of this proposal is to bridge the gap between the two communities in a 
 - [The Problem](#the-problem)
 - [The Proposal](#the-proposal)
   - [Goals](#goals)
-  - [Non-Goals](#non-goals)
+  <!-- - [Non-Goals](#non-goals) -->
   - [A High-Level API](#a-high-level-api)
   - [Key Scenarios](#key-scenarios)
 - [Detailed design discussion](#detailed-design-discussion)
