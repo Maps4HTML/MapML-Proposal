@@ -79,13 +79,14 @@ mapping standards.
 formats available from existing spatial (map) content management systems,
 APIs and Web Services.
 
+<!--
 <h3 id="non-goals">Non-goals</h3>
 
 - Interoperability with the operating model or availability of existing spatial
 (map) content management systems, APIs and Web Services.
 For example, the evolving
 <a href="https://ogcapi.ogc.org/"><abbr title="Open Geospatial Consortium">OGC</abbr> API</a>
-standards.
+standards.-->
 
 <h3 id="a-high-level-api">A High-Level API</h3>
 
