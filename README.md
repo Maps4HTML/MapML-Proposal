@@ -85,9 +85,9 @@ frameworks.
 The proposal is to create accessible, searchable and usable Web maps, by integrating 
 mapping elements into HTML supported by the CSS and DOM standards.
 
-This extension to HTML would create a `&lt;map>/&lt;mapmlviewer>*` viewer widget 
-that contains default controls in a user agent shadow root, (similar to `&lt;video>` 
-today), with child `&lt;layer>` elements which are light DOM, which may either 
+This extension to HTML would create a `<map>`/`<mapmlviewer>`* viewer widget 
+that contains default controls in a user agent shadow root, (similar to `<video>` 
+today), with child `<layer>` elements which are light DOM, which may either 
 refer to remote map source or contain map-related markup (the vocabulary of which 
 is also part of this proposal):
 
