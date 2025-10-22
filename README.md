@@ -12,145 +12,377 @@ The W3C [Maps for HTML Community Group](https://www.w3.org/community/maps4html/)
 is iterating on the problem space.
 You can contribute to the on-going discussion and documentation of
 [Use Cases and Requirements for Standardizing Web Maps](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/).
-Alternatively, if your organization is a member of the
-[Web Platform Incubator Community Group](https://www.w3.org/community/WICG/) (WICG)
-and you are able to contribute there but not elsewhere,
-please consider contributing through the [WICG forum on Web mapping](https://discourse.wicg.io/c/web-mapping/22).
-We would love to hear from you.
 
-[Issue tracker for this explainer](https://github.com/Maps4HTML/MapML-Proposal/issues)
+**Discussion venues:**
+- [Maps4HTML GitHub Organization](https://github.com/Maps4HTML/) - specifications, proposals, and discussions
+- [Issue tracker for this explainer](https://github.com/Maps4HTML/MapML-Proposal/issues)
+- [Public mailing list](mailto:public-maps4html@w3.org) - public-maps4html@w3.org ([archives](https://lists.w3.org/Archives/Public/public-maps4html/))
 
 <h2 id="introduction">Introduction</h2>
 
-Web maps are a well-established domain of Web design, and there exist popular, mature open and closed source JavaScript libraries to create and manage Web maps.  JavaScript web maps are often containers for publicly available and funded open geospatial and statistical data.  Yet despite established JavaScript libraries and server-side API standards, Web maps remain a complex Web niche that is difficult to learn, due to their extensive prerequisite knowledge requirements. As a result, there exists a community of Web map developers which contributes very little to the Web platform and which may possess little understanding that the Web exists as a distinct and standards-based platform. Similarly, the Web platform seems mostly oblivious to Web maps and their requirements, and provides no direct support for maps. In other words, Web maps existence in the Web platform depends on intermediaries which “abstract away” the Web platform.  
+**MapML (Map Markup Language) is a proposal to make maps and location a first-class feature of HTML**, similar to how `<img>`, `<video>`, and `<audio>` brought media natively to the web. Just as you can embed a video with a simple `<video src="...">` tag, MapML would let you embed an interactive map with `<mapml-viewer>` and declarative markup—no JavaScript libraries required for basic use cases.
 
-The goal of this proposal is to bridge the gap between the two communities in a way that may have positive benefits for both sides. On the one hand, the Web mapping community is burdened by intermediaries and the consequent barriers to widespread creation and use of maps and public map information. On the other hand, the Web platform, especially the mobile Web, needs more and better high-level features and less JavaScript. Simple yet extensible Web maps in HTML, that equally leverage the other platform standards, is the feature that both communities need to come together to improve usability and accessibility for users.
+The web platform has progressively added support for text, images, video and audio, but not yet for location and maps. This gap forces developers to rely on complex JavaScript libraries and pushes location-based information into proprietary, centralized services. Users face inconsistent accessibility, privacy concerns from tracking-based mapping services, and a mobile web experience that lags behind native apps—**especially for maps and location features**. MapML addresses these problems by bringing maps into the browser as a web-native feature, making location data linkable, crawlable, and accessible like other web content.
+
+**Current state:** The [W3C Maps for HTML Community Group](https://www.w3.org/community/maps4html/) is developing MapML through an iterative, collaborative process. A working polyfill implementation (built on Leaflet and Proj4) is [available via npm](https://www.npmjs.com/package/@maps4html/mapml/v/latest), and a [MapML extension for GeoServer](https://docs.geoserver.org/latest/en/user/extensions/mapml/index.html) demonstrates how existing geospatial services can adopt the format. This explainer presents the proposal for broader web platform consideration. MapML was the subject of a question in the State of HTML 2025 survey.
 
 <h2>Contents</h2>
 
 - [The Problem](#the-problem)
+  - [User-Facing Problem](#user-facing-problem)
+  - [Direct User Impact](#direct-user-impact)
+  - [Underlying Causes](#underlying-causes)
+  - [The Standards Gap](#the-standards-gap)
 - [The Proposal](#the-proposal)
+  - [How It Works](#how-it-works)
+  - [Benefits](#benefits)
+  - [Design Philosophy: Progressive Enhancement at the Standards Level](#design-philosophy-progressive-enhancement-at-the-standards-level)
   - [Goals](#goals)
-  <!-- - [Non-Goals](#non-goals) -->
-  - [A High-Level API](#a-high-level-api)
-  - [Key Scenarios](#key-scenarios)
-- [Detailed design discussion](#detailed-design-discussion)
-  - [Use Cases and Requirements](#use-cases-and-requirements)
-  - [W3C/OGC Joint Workshop on Maps for the Web](#w3c-ogc-joint-workshop-on-maps-for-the-web)
-- [Considered Alternative Designs of MapML](#considered-alternative-designs-of-mapml)
+  - [Non-Goals](#non-goals)
+  - [Example Markup](#example-markup)
+- [Internationalization](#internationalization)
+- [Accessibility Considerations](#accessibility)
+- [Use Cases and Requirements](#use-cases-and-requirements)
 - [Alternative Approaches](#alternative-approaches)
+  - [SVGMap, Hyper-Layering Architecture (HLA) and Layers as Web Apps (LaWAs)](#svgmap-hyper-layering-architecture-hla-and-layers-as-web-apps-lawas)
+  - [JavaScript Mapping Libraries](#javascript-mapping-libraries)
+  - [Status Quo (No Standardization)](#status-quo-no-standardization)
 - [Stakeholder Feedback / Opposition](#stakeholder-feedback--opposition)
 - [References and Acknowledgements](#references-and-acknowledgements)
 
+
 <h2 id="the-problem">The Problem</h2>
 
-Web maps today are created using a wide range of technology stacks on both the client and server, some standard, some open, and some proprietary.  The complexity of choices and the wide variety of technologies required to create Web maps results in <a href="https://github.com/Malvoz/web-maps-wcag-evaluation/blob/master/README.md">maps of highly variable usability and accessibility</a>.  This has in turn led to the creation of centralized mapping services, that may or may not be implemented using Web technology; in some cases, mapping services which work well on desktop Web browsers mostly bypass the mobile Web through creation of mobile platform mapping apps, where the ‘rules of the Web platform’ (such as device permissions) do not apply.  Some centralized mapping services, both on the Web but especially on mobile technology platforms, are constructed for the purpose of tracking the user’s location and their locations of (search) interest, and using that private location information to market and re-sell highly targeted advertising. 
+## User-Facing Problem
 
-The problem to be solved, therefore, is to reduce the threshold complexity of creating accessible, usable and privacy-preserving Web maps, and to enable full use of Web platform standards such as HTML, URL, SVG, CSS and JavaScript in map creation, styling, presentation and interaction. 
+Location is a fundamental primitive for information on the web—whether searching for businesses, events, services, or news. Yet the web platform does not provide native support for location as a primitive, unlike text, images, or video.
+
+**Maps are widely used but poorly supported:** Research by Bocoup analyzing the HTTP Archive dataset (7.9 million web pages) found that [approximately 16% of web pages use maps](https://www.bocoup.com/blog/no-neutral-map)—significantly more than `<video>` (4.1%) or `<picture>` (5.9%) elements. Of those pages with maps, 20-26% use complex geographic features like markers, popups, and polygons. Despite this widespread use, there is no native browser support for maps, forcing developers to rely entirely on JavaScript libraries.
+
+### Direct User Impact
+
+**Accessibility barriers:**  
+People using screen readers face significant barriers navigating maps and understanding spatial relationships. Current web maps built with JavaScript libraries have [highly variable accessibility](https://github.com/Malvoz/web-maps-wcag-evaluation/blob/master/README.md), creating an inconsistent and often exclusionary experience. In Bocoup's survey of web developers, 84% reported they don't have the necessary tools to make accessibility-compliant maps.
+
+**Privacy and surveillance:**  
+Accessing location-based information typically requires using centralized services that typically track users' locations and search interests, often for targeted advertising. Users have few privacy-preserving alternatives.
+
+**Inconsistent experience:**  
+Map interfaces vary widely across sites, and mobile web maps often don't work as well as native apps, pushing users off the open web.
+
+### Underlying Causes
+
+These user problems stem from deeper structural issues:
+
+**Location data is not web-native:**  
+Unlike text or images on the web, location information cannot be natively linked, crawled, or indexed by search engines. Web pages with location data cannot easily become "features" on a map or participate in spatial search.
+
+**Barriers to decentralization:**  
+Because the web lacks native support for location, and because maps and location services are complex and resource-intensive to build, the current landscape encourages centralization. Large platforms are typically required, and they typically control both the mapping databases and the search infrastructure, creating barriers to entry for smaller providers. Search engines cannot easily index the web's location data because it's locked in proprietary domains, behind inaccessible JavaScript.
+
+**High complexity for authors:**  
+Creating accessible, usable, and privacy-preserving web maps requires specialized knowledge, putting it out of reach for most web authors. This high barrier reinforces centralization—only well-resourced platforms can afford to build maps, limiting user choice. Bocoup's research found that approximately half of web developers say there aren't enough beginner-friendly mapping solutions available, with "implementing interactions" cited as the most difficult step when making maps.
+
+### The Standards Gap
+
+The web's architecture requires search to make the web useful—from early link directories to modern search algorithms. However, the **lack of standardization for location and maps in native HTML** has resulted in the centralization of location-based content into major web portals (such as Google Maps). The geographic web effectively exists outside the open web platform, accessible only through proprietary services.
+
+By adding native support for location in HTML (making location data linkable and crawlable), we can:
+- Enable distributed providers of location-based search, giving users more choices
+- Allow the "map database" to **become** the web itself
+- Reduce surveillance by enabling privacy-preserving alternatives
+- Lower barriers for authors, increasing the diversity of mapping services available to users
+
+**In summary:**  
+The lack of native location support in HTML creates direct user harm (accessibility, privacy, poor mobile experience) and systemic harm (centralization, surveillance, lack of user choice). Implementing location as a first-class web primitive addresses both.
 
 <h2 id="the-proposal">The Proposal</h2>
 
-To solve <a href="#the-problem">the problem</a>, our approach is to identify the Web map processing that is currently performed by JavaScript libraries which should instead be defined - in accordance with the <a href="https://w3ctag.github.io/design-principles/">Web Platform Design Principles</a> - as elements and attributes supported by CSS, while at the same time, we identify the Web map processing that should remain in the JavaScript domain as a standardized DOM API. By building the core behaviour of maps and layers into HTML, Web authors who want to build simple maps into their pages can easily do so, supported by core platform technologies, with the power of JavaScript available to enhance the core map and layer behaviour.
+We propose adding native HTML support for maps and location by introducing **MapML** (Map Markup Language) - a web-native format that makes location a first-class primitive, similar to how `<img>`, `<video>`, and `<audio>` made media first-class web content.
 
-By lowering the barriers for Web map authors in this way, we will improve the usability, and standardize the accessibility of Web maps.  Through making map creation a matter of applying appropriately crafted Web platform standards, we will create the conditions to multiply the choices of mapping services offered to authors and users of the Web. 
+### How It Works
 
-In improving the choices among mapping services available through the Web platform, we will enable the growth of services that offer alternate means of paying for maps other than in exchange for the user’s personal private information, and we will enable standardized Web map accessibility through addition of maps to HTML. Finally, by making it cheaper to create Web maps than to build mobile apps, we will improve the business rationale for choosing the mobile Web as a development platform, and in doing so we hope the (mobile) Web will benefit from increased ‘success’, or network effects.
+MapML follows the **"pave the cowpaths"** principle. Rather than replacing existing geospatial infrastructure (Web Map Services, Web Map Tile Services, OGC APIs, STAC, etc.), MapML provides a **standardized HTML interface** to these services. Map providers can offer MapML as an additional format via **existing standard APIs**.
+
+**MapML *is* HTML** - it's parsed by the HTML parser and uses the same vocabulary. Adding MapML support to existing map services (WMS, WMTS, etc.) means simply offering HTML as an additional serialization format. This small step by service providers enables massive global geospatial services interoperability in browsers.
+
+**Proven feasibility:** The Maps for HTML Community Group has contributed a [MapML extension module to GeoServer](https://docs.geoserver.org/latest/en/user/extensions/mapml/index.html), a widely-used open source geospatial server platform. This demonstrates that existing map services can adopt MapML without disrupting their current operations, serving as an exemplar for other service providers. MapML is implemented as standard web custom elements using the Leaflet and Proj4 web mapping engines. MapML.js is embedded in the GeoServer extension and is also [available via npm](https://www.npmjs.com/package/@maps4html/mapml/v/latest) for developers to use today.
+
+**Key concept:** MapML embodies the web architecture principle of **"Hypertext as the Engine of Application State" (HATEOAS)**. Just as HTML encodes hyperlinks, images, and videos with their behaviors, MapML encodes maps and locations as they are already essentially implemented and understood on the web - as map images, map features, tiling, vector tiles, coordinate reference systems, map scale, panning, zooming, legends, attribution/metadata, layering, and styling. While this proposal defines a specific set of capabilities, it also establishes a foundation for future collaboration and innovation between the web and geospatial communities.
+
+**Simple example:**
+
+```html
+<mapml-viewer zoom="11" lat="48.8566" lon="2.3522" controls>
+  <map-caption>Paris, the City of Light</map-caption>
+  <map-layer src="https://example.com/mapml/osm.mapml" checked></map-layer>
+</mapml-viewer>
+```
+
+This declarative syntax works like `<video>` - authors can embed interactive maps without requiring JavaScript expertise.
+
+### Benefits
+
+**For users:**
+- **Consistent accessibility** - Screen readers and assistive technology can reliably navigate maps
+- **Privacy options and choices** - Enables decentralized, privacy-preserving mapping alternatives
+- **Better mobile web** - Native support improves performance and user experience
+
+**For authors:**
+- **Lower barriers** - Create accessible maps as easily as embedding an image or video
+- **Standards-based** - Use HTML, CSS, and standard DOM APIs
+- **Progressive enhancement** - JavaScript and CSS available for advanced features when needed
+
+**For the web ecosystem:**
+- **Decentralization** - Lowers barriers for diverse mapping service providers
+- **User choice** - More options for users in how they access location-based information
+- **Crawlable location data** - Search engines can index spatial information like other web content
+
+### Design Philosophy: Progressive Enhancement at the Standards Level
+
+The MapML proposal follows a two-phase approach to naming and integration:
+
+**Phase 1 - Polyfill (current):** The polyfill uses custom element names like `<mapml-viewer>`, `<map-layer>`, and `<map-caption>` to avoid any collision with existing HTML elements. This conservative approach allows the community to validate the design, gather implementation experience, and demonstrate real-world usage without web compatibility risk.
+
+**Phase 2 - Standards Integration (future):** The path to standardization will favour **extending existing HTML elements with new attributes** where semantically appropriate and web-compatible, rather than proliferating new elements. For example:
+- `<link>` could gain map-specific `rel` values (e.g., `rel="map-stylesheet"`) rather than requiring a new `<maplink>` element
+- `<input>` could support new map control types (e.g., `type="map-zoom"`) rather than `<map-input>`
+- Similarly for other concepts that naturally extend existing element semantics
+
+This approach applies **progressive enhancement to the standard itself**: in non-compliant user agents, the existing element provides fallback behaviour, while compliant browsers enhance it with map-specific capabilities. This strategy minimizes growth of the HTML vocabulary while maintaining graceful degradation.
+
+Where new elements are genuinely needed (concepts with no existing HTML analog), they will be proposed as distinct additions. The final element and attribute design bikeshed will be determined through the standards process based on:
+- Web compatibility testing
+- Implementer feedback  
+- Semantic fit with existing HTML patterns
+- Progressive enhancement feasibility
 
 <h3 id="goals">Goals</h3>
 
-- Define the means to allow authors to create dynamic,
-usable and accessible Web maps about as easily as they can embed an image,
-a video or a podcast today.
-- Define and embed accessibility of map feature and location information into
-HTML for use by screen readers and other assistive technology.
-- Define and design security of map information considerations into the Web
-platform.
-- Define the markup to create mapping mashups that doesn’t necessarily require
-scripting or detailed mapping server technology knowledge
-i.e. that can be accomplished about as easily as linking to a document.
-- Simplify the use of public
-[spatial data infrastructures](https://en.wikipedia.org/wiki/Spatial_data_infrastructure)
-(SDI), such as
-[OpenStreetMap](https://wiki.openstreetmap.org/wiki/Main_Page)
-and national and international SDIs,
-by designing the integration of those services into the proposed Web platform
-mapping standards.
-- Defining and (advocate for) adding map-enabled HTML to the serialization
-formats available from existing spatial (map) content management systems,
-APIs and Web Services.
+- Enable declarative, accessible maps in HTML
+- Lower barriers for authors to create web maps
+- Make location data crawlable and linkable on the web
+- Enable user choice among diverse mapping service providers
+- Integrate with existing geospatial infrastructure where feasible
 
-<!--
-<h3 id="non-goals">Non-goals</h3>
+<h3 id="non-goals">Non-Goals</h3>
 
-- Interoperability with the operating model or availability of existing spatial
-(map) content management systems, APIs and Web Services.
-For example, the evolving
-<a href="https://ogcapi.ogc.org/"><abbr title="Open Geospatial Consortium">OGC</abbr> API</a>
-standards.-->
+- **Replacing existing geospatial services** - MapML doesn't aim to replace WMS, WMTS, OGC APIs, STAC, or other geospatial standards, but to provide a web-native interface to them
+- **Replacing JavaScript mapping libraries** - MapML provides a declarative layer for common use cases, not a complete replacement for specialized mapping libraries. With native rendering capabilities, libraries could potentially grow in power by leveraging browser-native mapping APIs for styling, visualization and data access
+- **3D mapping or globe rendering** - The current focus is on 2D web maps (though 3D could be considered as future work)
+- **Complete GIS functionality** - MapML is not intended to replicate the full capabilities of desktop GIS software
+- **Generalized pan/zoom for web content** - MapML's pan and zoom functionality is specific to maps and relies on coordinate reference system semantics that are not shared by non-geospatial web content
 
-<h3 id="a-high-level-api">A High-Level API</h3>
+<h3 id="example-markup">Example Markup</h3>
 
-The <a href="https://extensiblewebmanifesto.org/">Extensible Web Manifesto</a> calls for iterative development and evolution of platform features, starting with low-level ‘primitives’ and resulting eventually in high-level features.  Although there are several low-level primitive proposals inherent or implicated in this proposal, overall this can be seen as a proposal for a high-level feature.  That feature is declarative dynamic Web maps in HTML.  Web mapping is a mature category of JavaScript library that is well into the stage of its development life cycle that some of the aggregate characteristics of those libraries should be incorporated into the platform.  As such, this proposal captures some of the ‘cow paths’ of open and closed source JavaScript Web mapping libraries, as well as taking into consideration how to incorporate server-side mapping services and APIs.
-
-The proposed extension would create a standard `<map>` widget that contains controls in a user agent shadow root, (similar to `<video>` today), with child `<layer>` elements which are in, and may contain, light DOM map-related markup (the vocabulary of which is also part of this proposal):
+MapML provides a declarative HTML interface similar to `<video>`. Map viewer elements contain controls in a shadow root (like `<video>` today) with child layer elements in the light DOM:
 
 ```HTML
-<map zoom="11" lat="48.8566" lon="2.3522" controls controlslist="nolayer noreload">
-  <layer src="https://example.com/mapml/osm/" checked crossorigin></layer>
-</map>
+<mapml-viewer zoom="11" lat="48.8566" lon="2.3522" controls controlslist="nolayer noreload">
+  <map-layer src="https://example.com/mapml/osm/" checked crossorigin></map-layer>
+</mapml-viewer>
 ```
 <p><img src="images/map-example-paris.png" width="300" height="150" alt="Map of Paris"></p>
 
-*See the [High-Level API explainer](high-level-api.md) for details on the proposed elements and polyfill.*
+*See the [MapML Element Reference](https://maps4html.org/web-map-doc/docs/elements/mapml-viewer/) for detailed documentation on elements, attributes, and the polyfill implementation.*
 
-<h3 id="key-scenarios">Key Scenarios</h3>
+<h2 id="internationalization">Internationalization</h2>
 
-*See the [Key Scenarios explainer](key-scenarios.md) detailing:*
+MapML supports internationalization through standard web mechanisms:
 
-- Tiled Coordinate Reference Systems
-- Linking
+**HTML `lang` attribute:** The MapML.js library respects the standard HTML `lang` attribute on ancestor elements of the `<mapml-viewer>`. For example, setting `lang="fr"` on a parent element localizes the map viewer UI to French. MapML.js natively supports English and French localization, developed for Canada's bilingual official language environment.  This is understood to be a non-standard behaviour, but it is useful operationally.
 
-<h2 id="detailed-design-discussion">Detailed design discussion</h2>
+**Browser locale detection:** With the [MapML browser extension](https://maps4html.org/web-map-doc/docs/extension/features#localization) installed in developer mode, MapML.js can detect the user's browser locale using the browser's Internationalization API (which is not directly available to scripts). The extension enables automatic localization to the user's preferred language when locale resources are available. English, French, Ukrainian and Swedish browsers are currently available.
 
-<h3 id="use-cases-and-requirements">Use Cases and Requirements</h3>
+**Community contributions:** Additional locale support can be contributed by the community.
 
-This proposal is being [evaluated](https://github.com/Maps4HTML/MapML/labels/Requirements%20Evaluation)
-against the [Use Cases and Requirements for Standardizing Web Maps](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/),
-to identify gaps between the required functionality and the polyfilled behaviour.
+This approach ensures that maps can be accessible to users in their preferred language, following established web internationalization practices.
 
-See the [MapML UCR Fulfillment Matrix](https://maps4html.org/UCR-MapML-Matrix/mapml-ucrs-fulfillment-matrix.html)
-for how MapML compares in capabilities in contrast to existing popular web mapping libraries.
+<h2 id="accessibility">Accessibility Considerations</h2>
 
-<h3 id="w3c-ogc-joint-workshop-on-maps-for-the-web">W3C/OGC Joint Workshop on Maps for the Web</h3>
+MapML aims to provide consistent, standards-based accessibility for web maps:
 
-Natural Resources Canada hosted the 2020
-[W3C/OGC Joint Workshop Series on Maps for the Web](https://www.w3.org/2020/maps/)
-in cooperation with the Maps for HTML Community Group.
+**Keyboard and screen reader navigation:** Current web maps have [highly variable accessibility](https://github.com/Malvoz/web-maps-wcag-evaluation/blob/master/README.md), creating inconsistent experiences for users of assistive technology. The MapML.js polyfill is actively researching standardized patterns for accessible map navigation (pan, zoom, feature traversal) with input from screen reader users and keyboard-only users. This research will inform the specification of accessible interaction models.
 
-See the [Report on the Joint W3C-OGC Workshop on Maps for the Web](https://www.w3.org/2020/maps/report).
+Related to this work, the [CSS Working Group is considering native pan/zoom primitives](https://github.com/w3c/csswg-drafts/issues/5275) for general web content. While MapML requires map-specific pan and zoom with coordinate reference system semantics (see [Non-Goals](#non-goals)), if the CSSWG develops a general-purpose primitive, MapML could potentially build upon it. The CSSWG proposal highlights performance benefits (compositor-thread rendering), accessibility improvements (standardized interaction models for assistive technology), and better device adaptation—benefits that would apply to maps as well. Today's JavaScript-based map implementations must hijack scroll and touch events, which degrades both performance and accessibility.
 
-<h2 id="considered-alternative-designs-of-mapml">Considered alternative designs of MapML</h2>
+**Overlapping interactive content:** Maps uniquely present challenges with multiple layers of interactive features occupying the same visual space. The proposal addresses this through feature indexing and keyboard navigation patterns that allow users to discover and interact with all available content, even when features visually overlap.
 
-TBD - we have considered many alternatives, I have just run out of steam to document them, at the moment. Also this document is already quite long.  As things progress, I will add content here.
+**Progressive disclosure:** Map controls and features support progressive disclosure patterns, allowing users to navigate complex spatial information at their own pace without overwhelming cognitive load.
+
+<h2 id="use-cases-and-requirements">Use Cases and Requirements</h2>
+
+This proposal is being evaluated against the [Use Cases and Requirements for Standardizing Web Maps](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/). Each element in the [MapML Element Reference](https://maps4html.org/web-map-doc/docs/elements/mapml-viewer/) includes a requirements table showing how it addresses specific use cases (for example, see the [requirements table for the `<map-extent>` element](https://maps4html.org/web-map-doc/docs/elements/extent/#requirements)).
 
 <h2 id="alternative-approaches">Alternative Approaches</h2>
 
-- [SVGMap](https://discourse.wicg.io/t/vector-tiling-on-svgmap/3135) - is it possible to merge the SVGMap proposal and this proposal? Or are they competing proposals?
-- APIs: [Leaflet](https://leafletjs.com/), [OpenLayers](https://openlayers.org/) and others, (albeit others without any notion of cross-origin resource sharing) provide excellent map scripting APIs and events.  Can these or similar APIs be built on top of the proposed HTML infrastructure? Would life be simpler for authors with the proposed HTML?
-- Status quo
+### SVGMap, Hyper-Layering Architecture (HLA) and Layers as Web Apps (LaWAs)
+
+[SVGMap](https://discourse.wicg.io/t/vector-tiling-on-svgmap/3135) and its Hyper-Layering Architecture (HLA), developed by Satoru Takagi from W3C member KDDI Corporation, represents a complementary approach to web mapping that shares MapML's commitment to hypermedia principles and decentralization while taking a different architectural path.
+
+**Shared Philosophy:**
+- Both embrace HATEOAS (Hypertext as the Engine of Application State)
+- Both prioritize decentralization and user choice over centralized platforms
+- Both align with W3C Ethical Web Principles and the W3C Vision
+- Both seek to make geographic information a first-class web citizen
+
+**Architectural Differences:**
+
+*SVGMap/HLA Philosophy:* Provides minimal, general-purpose hooks in the browser (SVG/CSS/Geo-coordinate mapping API) while keeping maps' domain-specific logic in user-land via "Layers as Web Apps" (LaWAs). In this architecture, geospatial resource providers would publish LaWAs—JavaScript applications that adapt data available via various geospatial protocols (WMS, WFS, GeoJSON, etc.) for rendering. The browser would load and execute these LaWAs to render the associated resources. This approach aims to keep mapping semantics and logic out of the browser core.
+
+*MapML Philosophy:* Introduces minimal domain-specific map and location elements **into the browser core**, similar to how `<img>`, `<video>`, and `<audio>` brought media natively to HTML. Resources are declarative data (HTML/MapML documents) rather than executable code, following the same security model as other web content. This approach follows "paving the cowpaths"—standardizing patterns already widely used in geospatial web services while **enabling authors to apply skills they already possess** (HTML, CSS, JavaScript) to geographic data. Rather than requiring specialized geospatial expertise, MapML makes location and map data part of the standard web vocabulary, accessible to the same millions of developers who already build web pages.
+
+**Key Distinction: Data vs. Code**
+
+A fundamental difference lies in what gets transmitted from resource providers:
+- **SVGMap/LaWAs:** Publishers provide executable JavaScript (LaWAs) that browsers load and run to render resources
+- **MapML:** Publishers provide declarative data (MapML/HTML documents) that browsers parse and render using built-in capabilities
+
+This distinction has important implications for security, browser implementer acceptance, and the web's evolution. Browsers have traditionally been cautious about automatically loading and executing third-party scripts from resource providers due to security risks.
+
+**Potential for Integration:**
+
+Despite these differences, we see potential for complementary use:
+
+1. **MapML provides safe, declarative container and viewport management** - Handles extent, scale, projection, layering, and coordinate reference systems without requiring executable code from resource providers.
+
+2. **SVGMap/HLA could provide opt-in advanced rendering** - Where authors explicitly choose to use SVGMap's approach, they could load LaWA adapters within layer scope. For example:
+
+   ```html
+   <map-layer label="My Layer, your data" checked>
+     <map-script src="yourLaWA.js" type="module"></map-script>
+   </map-layer>
+   ```
+   
+   In this integration model, `<map-script>` would have different semantics from regular `<script>`:
+   - **Scoped API access:** The LaWA receives a restricted `MapLayerContext` API providing access to viewport state, rendering methods for that specific layer, and layer-scoped event handlers - but not full DOM access to the page
+   - **Sandboxed execution:** Runs in an isolated context (similar to Workers or Worklets) with message-passing to communicate with the layer, preventing XSS vulnerabilities
+   - **CSP-controllable:** Page authors can control LaWA execution via Content Security Policy
+   
+   This approach combines explicit author opt-in (security) with dynamic protocol adaptation (flexibility), potentially bridging both architectural philosophies.
+
+3. **SVG handles rendering where appropriate** - MapML's `text/mapml` media type can include `<svg>` elements, allowing SVGMap's vector rendering capabilities to work within MapML's coordinate framework.
+
+4. **Shared hypermedia principles** - Both use hyperlinks to connect distributed services, enabling web-scale geographic data integration.
+
+**Open Questions:**
+
+The SVGMap/HLA proposal raises important architectural questions that require further discussion:
+
+- **Security model:** How can browsers safely execute LaWAs from third-party resource providers without introducing security vulnerabilities? The web's security model distinguishes between:
+  - **Explicit inclusion:** Page authors choose to load `<script src="https://cdn.com/library.js">` and accept responsibility for trusting that code
+  - **Implicit execution:** Browsers automatically executing code based on resource URLs (e.g., if `<map-layer src="https://provider.com/data">` causes the browser to load and run JavaScript from that provider)
+  
+  The former is the current web model; the latter would be a significant departure raising questions about trust, control, and author intent.
+
+- **DOM access and isolation:** How would LaWAs access and manipulate the map viewer DOM while maintaining origin isolation? The browser's security model (as seen with sandboxed SVG in `<img>`) typically prevents external resources from executing scripts with DOM access to the embedding page.
+
+- **Author control:** Would LaWAs need to be explicitly loaded by page authors (like current JavaScript libraries) rather than automatically executed by browsers when referencing map resources?
+
+- **Integration path:** Can the benefits of both approaches (MapML's declarative simplicity + SVGMap's rendering sophistication) be achieved while maintaining web security principles?
+
+These are valuable questions for the broader web mapping standardization discussion.
+
+**The Path Forward:**
+
+A unified proposal incorporating both approaches could offer:
+- **For simple use cases:** Declarative and accessible HTML map embedding (MapML) without JavaScript
+- **For advanced use cases:** Dynamic LaWA adapters providing protocol flexibility
+- **For all cases:** Shared minimal browser primitives that both can build upon
+
+We believe browser vendors are more likely to engage with a unified geospatial web community than with competing proposals. Ongoing collaboration with the SVGMap community aims to reconcile these approaches into a coherent standardization path.
+
+**Note:** SVGMap/HLA is successfully deployed in production systems, including [KDDI's disaster prevention Web GIS for local governments in Japan](https://www.kddi.com/corporate/sustainability/regional-initiative/bosaimapboard/), demonstrating real-world viability.
+
+### JavaScript Mapping Libraries
+
+Current state-of-the-art web mapping relies on JavaScript libraries:
+
+**[MapLibre](https://maplibre.org/):** Modern, performant library with vector tile support and 3D capabilities. Backed by the Overture Maps Foundation and growing industry adoption.
+
+**[Leaflet](https://leafletjs.com/):** Lightweight, widely-adopted library focused on mobile-friendly interactive maps. Simple API for common use cases.
+
+**[OpenLayers](https://openlayers.org/):** Feature-rich library with extensive projection support and advanced capabilities. Steeper learning curve.
+
+**Others:** Mapbox GL JS, Google Maps JavaScript API, Cesium (3D), and numerous specialized libraries.
+
+**Strengths:**
+- Mature, battle-tested codebases
+- Rich ecosystems of plugins
+- Sophisticated features and flexibility
+- Active communities
+
+**Limitations relative to MapML:**
+- **High barrier to entry:** Requires JavaScript expertise and geospatial domain knowledge
+- **Inconsistent accessibility:** Each library handles accessibility differently; many maps are inaccessible to screen readers
+- **Performance overhead:** JavaScript parsing and execution on every page load
+- **No native browser optimization:** Cannot benefit from browser-level optimizations for maps
+- **Limited crawlability:** Search engines cannot easily index map content
+- **Maintenance burden:** Sites must keep libraries updated; breaking changes require developer intervention
+
+**Can MapML and libraries coexist?**
+
+Yes. MapML's polyfill is built (today) *on* Leaflet, demonstrating that libraries can serve as polyfill implementation engines. The proposed HTML infrastructure would:
+- Provide a declarative layer for simple use cases (80% of map embedding)
+- Expose DOM APIs and events for JavaScript enhancement (the remaining 20%)
+- Allow libraries to use native browser primitives when available, improving performance
+- Enable simpler APIs when the browser handles coordinate transforms, projections, and viewport management
+
+As noted by Andreas Hocevar (key contributor to OpenLayers) during the [2020 W3C/OGC Workshop](https://www.w3.org/2020/maps/report#executive-summary): with native rendering capabilities, mapping libraries could potentially **grow in capability** by shifting the burden of rendering to the browser, where authors can leverage native CSS tools for styling and visualization.
+
+Authors could progressively enhance: start with declarative HTML maps, add CSS and JavaScript only where needed.
+
+### Status Quo (No Standardization)
+
+**Current situation:**
+- Maps remain a specialized domain requiring JavaScript libraries
+- Each site implements maps differently
+- Accessibility varies widely (often poor)
+- Location-based content exists in proprietary silos
+- Search engines cannot index geographic information on the web
+- Mobile web maps lag behind native app experiences
+
+**Why change is needed:**
+
+The status quo perpetuates the problems described in ["The Problem"](#the-problem) section: accessibility barriers, privacy concerns, centralization, and high complexity. Without standardization, the geographic web remains disconnected from the open web platform, limiting user choice and concentrating control with large platforms.
+
+The web successfully standardized images, video, and audio. Maps deserve the same treatment.
 
 <h2 id="stakeholder-feedback-opposition">Stakeholder Feedback / Opposition</h2>
 
-Some participants have said we should start over, because of the [sunk costs fallacy](https://en.m.wikipedia.org/wiki/Sunk_cost#Concorde_effect); that doesn’t seem to be in the spirit of iteration, nor hopefully is it correct to see this proposal as a waste of energy or money.  A better strategy would be to solicit concrete, actionable and incremental change requests.  It is in that spirit that the current explainer is offered. 
+**Community Engagement:**
 
-The objective of this project is to get Web browser projects to agree that Web maps as a high level feature are desirable and that the proposal is implementable, and _then_ to implement and ship the feature.  To get there from here, we need browser developer participation, the absence of which appears equivalent to opposition. So, there is work to do.
+This proposal has been developed through extensive community collaboration:
 
-<h2 id="references-and-acknowledgements">References and Acknowledgements</h2>
+- **W3C/OGC Joint Workshop (2020):** Natural Resources Canada hosted a [joint workshop series](https://www.w3.org/2020/maps/) bringing together browser vendors, geospatial community members, and standards bodies. The [workshop report](https://www.w3.org/2020/maps/report) documented consensus on key challenges and potential approaches.
 
-Contributions, advice and support from the following people are gratefully acknowledged:
+- **Evidence-Based Research (2022):** [Bocoup conducted research](https://www.bocoup.com/blog/no-neutral-map) analyzing HTTP Archive data and surveying developers, validating the problem space and recommending an iterative standardization approach. This research confirmed that 16% of web pages use maps—more than `<video>` or `<picture>` elements—and identified significant accessibility and authoring challenges.
 
-Benoît Chagnon, Brian Kardell, Michael<sup>tm</sup> Smith, Robert Linder, Joan Masó, Keith Pomakis, Gil Heo, Jérôme St-Louis,  Amelia Bellamy-Royds, Nic Chan, Nick Fitzsimmons, Simon Pieters, Tom Kralidis, Daniel Morissette, Chris Hodgson, Ahmad Yama Ayubi, Bennett Feely, Doug Schepers
+- **State of HTML 2025 Survey:** MapML was included as a question in the State of HTML 2025 survey, indicating ongoing community interest.
 
-If I’ve forgotten to mention you, please open an issue.
+**Implementer Signals:**
 
-Errors and omissions are certainly my own; if you spot a correction needed in the above, please open an issue. 
+- **Browser vendors:** No formal positions published yet. Seeking feedback through W3C TAG review and standards process.
+- **Geospatial community:** Positive engagement through OGC and Maps for HTML Community Group. GeoServer (widely-deployed open source platform) has implemented the MapML extension module.
+- **JavaScript library developers:** Ongoing collaboration; polyfill built on Leaflet demonstrates coexistence model.
+
+**Path Forward:**
+
+We welcome concrete, actionable feedback from all stakeholders. The proposal follows an iterative approach with polyfill validation, use case documentation, and community group iteration. Browser implementer participation and feedback are essential to refine the proposal for standardization.
+
+<h2 id="references-and-acknowledgements">References</h2>
+
+**Key Resources:**
+- [MapML Specification](https://maps4html.org/MapML/spec/)
+- [MapML Element Reference](https://maps4html.org/web-map-doc/docs/elements/mapml-viewer/)
+- [MapML.js](https://www.npmjs.com/package/@maps4html/mapml/v/latest) - polyfill implementation available via npm
+- [GeoServer MapML Extension](https://docs.geoserver.org/latest/en/user/extensions/mapml/index.html) - demonstrates server-side MapML adoption
+- [Use Cases and Requirements for Standardizing Web Maps](https://maps4html.org/HTML-Map-Element-UseCases-Requirements/)
+- [W3C/OGC Joint Workshop Series on Maps for the Web](https://www.w3.org/2020/maps/) (2020) - [Workshop Report](https://www.w3.org/2020/maps/report)
+- [WCAG Evaluation of Web Maps](https://github.com/Malvoz/web-maps-wcag-evaluation/blob/master/README.md)
+- [Bocoup Web Maps Research](https://www.bocoup.com/blog/no-neutral-map) (2022) - HTTP Archive analysis showing 16% of web pages use maps
+
+**Acknowledgements:**
+
+This proposal represents the collaborative efforts of the [W3C Maps for HTML Community Group](https://www.w3.org/community/maps4html/). We gratefully acknowledge the contributions of all community group participants, past and present, whose insights, code contributions, use case documentation, and sustained engagement have shaped this work. Special thanks to Natural Resources Canada for hosting the W3C/OGC Joint Workshop Series, to Bocoup for their evidence-based research, and to Simon Pieters for his thorough review and advocacy on behalf of the community with the CSS Working Group.
+
