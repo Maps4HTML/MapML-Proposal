@@ -218,7 +218,7 @@ This proposal is being evaluated against the [Use Cases and Requirements for Sta
 
 ### SVGMap, Hyper-Layering Architecture (HLA) and Layers as Web Apps (LaWAs)
 
-[SVGMap](https://discourse.wicg.io/t/vector-tiling-on-svgmap/3135) and its Hyper-Layering Architecture (HLA), developed by Satoru Takagi from W3C member KDDI Corporation, represents a complementary approach to web mapping that shares MapML's commitment to hypermedia principles and decentralization while taking a different architectural path.
+[SVGMap](https://discourse.wicg.io/t/vector-tiling-on-svgmap/3135) and its [Hyper-Layering Architecture (HLA)](https://svgmap.github.io/presentations/W3C_Maps4HTMLCG/HyperLayeringArchitectureCommunityReport.html), developed by Satoru Takagi from W3C member KDDI Corporation, represents a complementary approach to web mapping that shares MapML's commitment to hypermedia principles and decentralization while taking a different architectural path.
 
 **Shared Philosophy:**
 - Both embrace HATEOAS (Hypertext as the Engine of Application State)
@@ -282,6 +282,9 @@ The SVGMap/HLA proposal raises important architectural questions that require fu
 - **Integration path:** Can the benefits of both approaches (MapML's declarative simplicity + SVGMap's rendering sophistication) be achieved while maintaining web security principles?
 
 These are valuable questions for the broader web mapping standardization discussion.
+
+**Update (May 2026):** The HLA community has published a Community Group Report documenting **S-LaWA (Sandboxed LaWA)**, an implementation that addresses the security concerns noted above — DOM isolation via iframe sandboxing, explicit author control through `data-lawa-mode`, and message-based integration. See [HLA Community Report §7](https://svgmap.github.io/presentations/W3C_Maps4HTMLCG/HyperLayeringArchitectureCommunityReport.html#security-and-isolation).
+
 
 **The Path Forward:**
 
